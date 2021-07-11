@@ -1,0 +1,273 @@
+// @import url('variables.scss');
+// @import url('typography.scss');
+// @import url('layout.scss');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&display=swap');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ruthie&display=swap');
+
+// @mixin bp($point) {
+//     @if $point==desktop-large {
+//         @media (min-width: 1600px) {
+//             @content;
+//         }
+//     }
+
+//     @else if $point==desktop {
+//         @media (min-width: 1250px) {
+//             @content;
+//         }
+//     }
+
+//     @else if $point==laptop {
+//         @media (min-width: 1024px) {
+//             @content;
+//         }
+//     }
+
+//     @else if $point==mobile {
+//         @media (max-width: 1023px) {
+//             @content;
+//         }
+//     }
+
+//     @else if $point==phone {
+//         @media (max-width: 650px) {
+//             @content;
+//         }
+//     }
+// }
+
+
+:root {
+    /* името да е семантично смислено */
+    /* правим си списък от размери */
+    --font-size-body: 14px;
+    --font-size-body-larger: 16px;
+    --font-size-body-big: 18px;
+    --font-size-body-huge: 20px;
+    --layout-main-width: 70em;
+    --color-pink-default: #efd6d6;
+    --color-blue-default: #1B3D52;
+    --spacing-layout-elements: 2em;
+
+}
+@font-face {
+    font-family: "blackstand";
+    src: url('./font/Blackstand.ttf');
+}
+body {
+    margin     : 0;
+    font-family:'Cinzel', serif;
+}
+// нямам такъв клас
+.site { 
+    max-width: var(--layout-main-width);
+    margin: 0 auto;
+    padding: 2em;
+ }
+*,
+*:before,
+*::after {
+    /* мини ресет CSS - искаме да махнем цялото бяло пространство преди и след вс елементи */
+    margin    : 0;
+    padding   : 0;
+    /* всичски елементи, които са в страницата да наследяват box-sizing стойнстта  */
+    box-sizing: inherit;
+}
+
+html {
+    /* ако никъде др не сетнем box-sizing вс елементи ще имат border box */
+    box-sizing: border-box;
+    /* 14px body font-size, line-height - 1.5 пъти от фонт сайз-а */
+    /* за всеки символ по отделно проверява дали съществува първия шрифт, после втория, третия ако сме задали generic-a  */
+
+    font-family: 'Cinzel';
+   
+}
+
+
+
+// @media (min-width: 600px) {
+//     html {
+//         font-size: var(--font-size-body-larger, 16px);
+//     }
+// }
+
+// @media (min-width: 1024px) {
+//     html {
+//         font-size: var(--font-size-body-big, 18px);
+//     }
+// }
+
+// @media (min-width: 1600px) {
+//     html {
+//         font-size: var(--font-size-body-huge, 20px);
+//     }
+// }
+
+// а {
+//     text-decoration: none;
+//     color: var(--color-link-default, #0A0 );
+// }
+
+// /* mobile first - 14px и правим responcive надолу */
+// /* всичко е едно под др, рядко ни се налага да правим layout т.е. две кутийки една до друга, три още по-рядко */
+// /* само тук можем да си позволим да ползваме пиксели, защото променяме хтмл-а и сетваме основните font size */
+// /* навсякъде другаде използваме em-ове, за да може да получим наготово промяната в празното пространство, когато сменим този font size */
+// /* em - релативна единица към фонт сайза на текущия елемент 1em e 100% от текущия body font size-a*/
+
+// @media (min-width: 600px) {
+//     html {
+//         font-size: 16px;
+//     }
+// }
+
+// @media (min-width: 1024px) {
+//     html {
+//         font-size: 18px;
+//     }
+// }
+
+// @media (min-width: 1600px) {
+//     html {
+//         font-size: 20px;
+//     }
+// }
+
+// body,
+// table,
+// form,
+// select,
+// option,
+// input,
+// textarea {
+//     font: inherit;
+// }
+
+// h1,
+// h2,
+// h3,
+// h4,
+// h5 {
+//     font-size    : 1em;
+//     margin-bottom: 0.5em;
+//     font-weight  : normal;
+//     font-family  : 'Roboto', sans-serif;
+// }
+
+// /* тук вече създаваме структурата на база боди фонт сайза-а */
+// h1 {
+//     font-size: 2.6em;
+// }
+
+// /*260% х тек фонт сайз - margin bottom ще е 50% от това*/
+// h2 {
+//     font-size: 2.0em;
+// }
+
+// h3 {
+//     font-size: 1.8em;
+// }
+
+// h4 {
+//     font-size: 1.4em;
+// }
+
+// h5 {
+//     font-size: 1.2em;
+// }
+
+// h6 {
+//     font-size: 1em;
+// }
+
+// p,
+// ul,
+// ol {
+//     padding-bottom: 1.5em;
+// }
+
+// ul,
+// ol {
+//     padding-bottom: 2em;
+// }
+
+// ul ul,
+// ol ul,
+// ul ol,
+// ol ol {
+//     padding-top   : 0.5em;
+//     padding-bottom: 0.5em;
+// }
+
+// ol>li>ol>li {
+//     list-style-type: lower-roman;
+// }
+
+// /* цитатите */
+// blockquote {
+//     padding: 1rem;
+// }
+
+// /* автор вътре в цитатите */
+// blockquote .author {
+//     font-style: italic;
+//     text-align: right;
+//     opacity   : 0.5;
+// }
+
+// blockquote .author:before {
+//     display      : inline-block;
+//     /* специален симпвол подобен на тире */
+//     content      : '\2014';
+//     padding-right: 0.5em;
+// }
+
+// /* и така създаваме тази типография тук  */
+
+// table {
+//     width          : 100%;
+//     text-align     : left;
+//     border-collapse: collapse;
+//     margin-top     : 1.5em;
+//     margin-bottom  : 1.5em;
+// }
+
+// table,
+// td,
+// th {
+//     border-width: 1px;
+//     border-color: rgb(221, 221, 221);
+//     border-style: solid;
+//     padding     : 0.3em;
+// }
+
+// thead {
+//     background: gray;
+// }
+
+// tbody tr:nth-child(odd) {
+//     background: rgb(241, 241, 241);
+// }
+
+// tbody tr:hover {
+//     background-color: rgb(0, 0, 0);
+//     color           : rgb(255, 255, 255);
+// }
+// .site {
+//     max-width: var(--layout-main-width);
+//     margin: 0 auto;
+//     padding: 2em;
+//  }
+//  .site-header {
+//      /* логото и навигацията да са едно до друго */
+//      display: flex;
+//      margin-left: auto;
+//  }
+//  .site-header nav{
+//      margin-left: auto;
+//  }
+ 

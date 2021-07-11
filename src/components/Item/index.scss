@@ -1,0 +1,95 @@
+.card {
+    margin         : 20px;
+    display        : flex;
+    /*подрежда заглавие, съдърж.и фуутър на един ред*/
+    justify-content: center;
+    align-items    : stretch;
+    border         : 1px solid white;
+    overflow       : hidden;
+}
+
+.description {
+    flex-basis     : 50%;
+    display        : flex;
+    flex-flow      : column wrap;
+    justify-content: space-around;
+    align-items    : flex-start;
+    padding-left   : 40px;
+
+}
+
+.article-header .article-footer {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+}
+
+.article-header-name {
+    font-size    : var(--font-size-body-huge);
+    font-weight  : 700;
+    border-bottom: 2px solid white;
+    padding      : 10px;
+}
+
+.details-header {
+    font-size  : var(--font-size-body-huge);
+    font-weight: 700;
+}
+
+.article-price {
+    padding: 10px;
+}
+
+.article-footer {
+    padding   : 10px;
+    border-top: 2px solid white;
+}
+
+.card .body {
+    padding       : 5px;
+    flex-basis    : 50%;
+    display       : flex;
+    flex-direction: column;
+}
+
+.images-small-wrapper {
+    display    : flex;
+    align-items: center;
+}
+
+.image-small {
+    margin: 10px;
+}
+
+img {
+    max-width: 100%;
+    height   : auto;
+}
+
+.article-details {
+    display        : flex;
+    flex-flow      : column wrap;
+    justify-content: center;
+}
+
+.select-options {
+    padding: 5px;
+}
+
+.single-option {
+    padding: 0 20px;
+}
+
+.article-header-name {
+    position: relative;
+}
+
+.article-header-name::before {
+    content: ''; //задължително трябва да сложим content пропърти на before елементи, дори да е празно съдържание
+    background: url('https://softuni.bg/Content/images/curriculum/entry-module-header.svg');
+    background-repeat: no-repeat; //за да не се повтаря
+    position:absolute; //в parent с position: relative;
+    left:0; 
+    width: 50px;
+    height: 70px;
+}
