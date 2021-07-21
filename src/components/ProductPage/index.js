@@ -1,8 +1,6 @@
 import './index.scss'
 
-
-
-const ItemPage = ( {id, name, description, imageUrl, category, price, likes}) => {
+const ProductPage = ( {id, name, description, imageUrl, category, price, likes}) => {
   return (
 
     <main>
@@ -99,4 +97,4 @@ const ItemPage = ( {id, name, description, imageUrl, category, price, likes}) =>
 
   )
 }
-export default ItemPage
+export default ProductPage

@@ -1,8 +1,6 @@
 import './index.scss'
 
-
-
-const Item = ({ id, name, description, imageUrl, category, price, likes }) => {
+const Product = ({ id, name, description, imageUrl, category, price, likes }) => {
   return (
     <section className="card">
       <img alt="11"
@@ -12,4 +10,4 @@ const Item = ({ id, name, description, imageUrl, category, price, likes }) => {
     </section>
   )
 }
-export default Item
+export default Product

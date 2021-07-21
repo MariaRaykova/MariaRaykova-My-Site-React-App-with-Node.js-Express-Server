@@ -1,6 +1,6 @@
 .content-container {
     display: flex;
-    background-color: var(--color-pink-default, lightgrey);
+    // background-color: var(--color-pink-default, lightgrey);
 }
 .content-container aside {
     flex-basis: 10%;
@@ -8,7 +8,7 @@
     padding: 20px 20px 20px 20px;
     order: -1;
     /*за да мине вляво от main*/
-    background: lightgrey;
+    // background: lightgrey;
 }
 
 .content-container main {
@@ -39,7 +39,7 @@
 
 .navbar .first-bar form{
     display: flex;
-    align-items: center;
+    align-products: center;
 }
 form {
 	max-width: 30rem;
@@ -87,13 +87,10 @@ form label {
 	font-weight: bold;
 }
 
-
-
-
 .field .input {
 	display: flex;
 	position: relative;
-	align-items: center;
+	align-products: center;
 }
 
 .field .input:after {

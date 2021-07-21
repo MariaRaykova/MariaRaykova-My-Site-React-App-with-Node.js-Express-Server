@@ -33,14 +33,14 @@ header {
     display: flex;
     // flex-flow: column wrap;
     // justify-content: space-around;
-    // align-items: center;
+    // align-products: center;
     // position: relative;
     min-height: 100px;
 }
 header .content-limiter{
     padding: 20px 0;
     justify-content: space-around;
-    align-items: center;
+    align-products: center;
     @include bp(mobile) {
         
 
@@ -57,7 +57,8 @@ header .content-limiter{
     }
 }
 .nav-link-selected {
-    background: var(--color-blue-default, white);
+    // background: var(--color-blue-default, white);
+    font:bold;
 }
 .logo-nd {
     font-size  : 35px;
@@ -238,7 +239,7 @@ nav li {
 }
 .header-buttons {
     display: flex;
-    align-items: center;
+    align-products: center;
 
     .fa-search {
         color: white;
@@ -260,7 +261,7 @@ header .content-limiter {
     /*хоризонтала, за да подредим логото и nav хоризонтално по-надолу - МАЙ е излишно, защото дефолтно е хоризонтално, а долу с flex:1 сме дали да се разпъват максимално и да се свиват...няма нужда от wrap*/
     justify-content: space-around;
     /*манипулира празното пространство между елементите*/
-    align-items: center;
+    align-products: center;
     /*за да са центрирани и по вертикала*/
     width: 100%;
 }

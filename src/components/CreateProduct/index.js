@@ -1,27 +1,30 @@
 import { useContext } from "react"
+import { useHistory } from "react-router-dom"
 import AuthContext from "../../contexts/AuthContext"
+import PageWrapper from "../PageWrapper"
 
 
-const CreateItem = ({history}) => {
-  const { loggedIn, user} = useContext(AuthContext) 
-    const getCookie = (name) => {
-        const cookieValue = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
-        return cookieValue ? cookieValue[2] : null
-    }
-    console.log(getCookie())
-    console.log(getCookie())
+const CreateProduct = () => {
+  const context = useContext(AuthContext) 
+  const history = useHistory()
+    // const getCookie = (name) => {
+    //     const cookieValue = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
+    //     return cookieValue ? cookieValue[2] : null
+    // }
+   
   const onCreateSubmitHandler = (e) => {
     e.preventDefault();
-
+   const id = context.user.id
     const name = e.target.name.value
     const description = e.target.description.value
     const image = e.target.image.value
     const price = e.target.price.value
     const likes = e.target.likes.value
-    console.log(likes)
-    fetch('http://localhost:9999/api/item', {
+    // console.log(likes)
+    fetch('http://localhost:9999/api/product', {
       method: 'POST',
-      body: JSON.stringify({ //зависи как е настроено АПИ-то
+      body: JSON.stringify({ 
+        _id: id,
         name,
         description,
         imageUrl: image,
@@ -30,7 +33,7 @@ const CreateItem = ({history}) => {
       }),
       headers: {
         'Content-Type': 'application/json',
-         Authorization: getCookie('x-auth-token')
+         Authorization: window.localStorage.getItem("token")
       }
     }).then(promise => promise.json())
     .then(()=> {
@@ -39,11 +42,12 @@ const CreateItem = ({history}) => {
    
   }
   return (
+    <PageWrapper>
     <main>
       <section className="create">
         <form onSubmit={onCreateSubmitHandler}>
           <fieldset>
-            <legend>Create Item</legend>
+            <legend>Create Product</legend>
        
             <p className="field">
               <label htmlFor="name">Name</label>
@@ -89,6 +93,8 @@ const CreateItem = ({history}) => {
       </section>
 
     </main>
+    </PageWrapper>
   )
+
 }
-export default CreateItem
+export default CreateProduct

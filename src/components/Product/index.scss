@@ -3,7 +3,7 @@
     display        : flex;
     /*подрежда заглавие, съдърж.и фуутър на един ред*/
     justify-content: center;
-    align-items    : stretch;
+    align-products    : stretch;
     border         : 1px solid white;
     overflow       : hidden;
 }
@@ -13,7 +13,7 @@
     display        : flex;
     flex-flow      : column wrap;
     justify-content: space-around;
-    align-items    : flex-start;
+    align-products    : flex-start;
     padding-left   : 40px;
 
 }
@@ -21,7 +21,7 @@
 .article-header .article-footer {
     display        : flex;
     justify-content: center;
-    align-items    : center;
+    align-products    : center;
 }
 
 .article-header-name {
@@ -54,7 +54,7 @@
 
 .images-small-wrapper {
     display    : flex;
-    align-items: center;
+    align-products: center;
 }
 
 .image-small {

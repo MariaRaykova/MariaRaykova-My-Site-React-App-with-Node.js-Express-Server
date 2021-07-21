@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 const Model = mongoose.model;
 const { String, Number,  ObjectId } = Schema.Types;
 
-const itemSchema = new Schema({
-
+const productSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -25,14 +24,14 @@ const itemSchema = new Schema({
         type: Number,
         required: true,
     },
-    author: {
+    author: [{
         type: ObjectId,
         ref: "User"
-    }
+    }]
 }, {
     timestamps: {
         createdAt: 'created_at'
     }
 });
 
-module.exports = new Model('Item', itemSchema);
+module.exports = new Model('Product', productSchema);

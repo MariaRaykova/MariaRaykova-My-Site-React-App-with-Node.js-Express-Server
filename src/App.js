@@ -1,43 +1,64 @@
-import { Route, Switch } from 'react-router-dom'
-import './App.scss';
-import Header from './components/Header'
-import Footer from './components/Footer'
-
-import Aside from './components/Aside'
-import Item from './components/Item'
-import Main from './components/Main'
-// import Categories from './components/Categories'
-import LoginPage from './components/LoginPage';
-import RegisterPage from './components/RegisterPage';
-import CreateItem from './components/CreateItem';
-
-import AuthContext from './contexts/AuthContext';
+import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import "./App.scss";
+import AuthContext from "./contexts/AuthContext";
+import { isAuthenticated } from "./utils/auth";
+import { getVerifiedUser } from "./utils/verifyUser";
+// import { setAdmin } from "./utils/seed"
 
 function App(props) {
+  // setAdmin();
+  const history = useHistory();
+  const [userObject, setUserObject] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const logInFunc = (user) => {
+    setUserObject(user);
+    setIsLogged(true);
+  };
+  const logOutFunc = () => {
+    setIsLogged(false);
+    setUserObject(null);
+    window.localStorage.clear();
+  };
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      setLoading(false);
+      logOutFunc();
+      return;
+    }
+    getVerifiedUser().then((response) => {
+      if (response.user) {
+        logInFunc(response.user);
+      } else {
+        logOutFunc();
+        history.push("/");
+      }
+         //като приключи рекуеста сетваме флага на false
+        setLoading(false);
+    });
+ 
+  }, []);
+
+  if (loading) {
+    return <div>Loading....</div>;
+  }
+
   return (
-   <body>
-                 <AuthContext.Provider value={{}}>
- {props.children}
-
-      <Header />
-      <div className="content-container content-limiter">
-      <Switch>
-        <Route path="/" exact component={ Main } />
-        <Route path="/item" exact component={ Item } />
-        <Route path="/item/create" component={ CreateItem } />
-        <Route path="/login" component={ LoginPage } />
-        <Route path="/register" component={ RegisterPage } />
-      </Switch>
-      {/* <Main /> */}
-      {/* <Item /> */}
-      {/* <LoginPage/> */}
-      <Aside />
-      </div>
-    
-
-      <Footer />
+    <div>
+      <AuthContext.Provider
+        value={{
+          user: userObject,
+          isLogged,
+          logIn: logInFunc,
+          logOut: logOutFunc
+        }}
+      >
+          {props.children}
       </AuthContext.Provider>
-      </body>
+    </div>
   );
 }
 export default App;

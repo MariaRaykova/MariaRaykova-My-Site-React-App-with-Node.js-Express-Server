@@ -1,33 +1,31 @@
+import { useContext, useState} from 'react'
+import AuthContext from '../../contexts/AuthContext';
 import ButtonLight from '../ButtonLight'
 import './index.scss'
+import {logInHandler} from '../../utils/submitHandler'
+import { useHistory, Redirect } from 'react-router-dom';
+import PageWrapper from '../PageWrapper'
 
-const LoginPage = ({history}) => {
+const LoginPage = () => {
+  const context = useContext(AuthContext);
+  const history = useHistory();
+ 
+  
 
   const onLoginSubmitHandler = (e) => {
     e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    const username = e.target.username.value
-    const password = e.target.password.value
-    fetch('http://localhost:9999/api/user/login', {
-      method: 'POST',
-      body: JSON.stringify({ //зависи как е настроено АПИ-то
-        username,
-        password
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => {
-      const authToken = res.headers.get('Authorization')
-      document.cookie = `x-auth-token=${authToken}` 
-      console.log(authToken);
-      return res.json()
-    }).then(()=> {
-      history.push('/')
-    })
-  }
+    logInHandler({ email, password }).then((data) => {
+      context.logIn(data);
+      history.push("/");
+    });
+  };
+
   return (
+ 
+    <PageWrapper>
     <main>
       <section className="login">
         <form onSubmit={onLoginSubmitHandler}>
@@ -35,9 +33,9 @@ const LoginPage = ({history}) => {
             <legend>Login</legend>
             <p className="form_instructions">Please enter your e-mail and password:</p>
             <p className="field">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <span className="input">
-                <input type="text" name="username" id="username" placeholder="Username" />
+                <input type="text" name="email" id="email" placeholder="email" />
                 <span className="actions"></span>
               </span>
             </p>
@@ -57,6 +55,7 @@ const LoginPage = ({history}) => {
       </section>
 
     </main>
+    </PageWrapper>
   )
 }
 export default LoginPage

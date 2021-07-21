@@ -4,24 +4,38 @@ const saltRounds = 10;
 
 const Schema = mongoose.Schema;
 const Model = mongoose.model;
-const { String, ObjectId } = Schema.Types;
+const { String, ObjectId, Number } = Schema.Types;
 
-const userSchema = new Schema({
-
-    username: {
-        type: String,
-        unique: true,
-        required: true
+const userSchema = new Schema(
+    {
+        name: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            unique: true,
+            required: true
+        },
+        password: {
+            type: String,
+            require: true
+        },
+        role: {
+            type: String,
+            default: "user"
+        },
+        history: {
+            type: Array,
+            default: []
+        },
+        posts: [{
+            type: ObjectId,
+            ref: "Product"
+        }],
     },
-
-    password: {
-        type: String,
-        require: true
-    },
-
-    posts: [{ type: ObjectId, ref: "Item" }]
-
-});
+    { timestamps: true }
+);
 
 userSchema.methods = {
 

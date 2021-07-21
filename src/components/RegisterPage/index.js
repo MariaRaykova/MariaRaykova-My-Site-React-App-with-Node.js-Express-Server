@@ -1,38 +1,31 @@
-import ButtonLight from '../ButtonLight'
 import './index.scss'
+import { useContext } from 'react'
+import AuthContext from '../../contexts/AuthContext';
+import { registerHandler } from '../../utils/submitHandler'
+import { useHistory } from 'react-router-dom';
+import PageWrapper from '../PageWrapper';
 
-const RegisterPage = ({history}) => {
+const RegisterPage = () => {
+
+    const history = useHistory();
+    const context = useContext(AuthContext)
+
     const onRegisterSubmitHandler = (e) => {
         e.preventDefault()
-        const username = e.target.username.value
+        const name = e.target.name.value
+        const email = e.target.name.value
         const password = e.target.password.value
         const rePassword = e.target.rePassword.value
-
+        
         if (password === rePassword) {
-            fetch('http://localhost:9999/api/user/register', {
-                method: 'POST',
-                body: JSON.stringify({ //зависи как е настроено АПИ-то
-                    username,
-                    password
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }})
-                .then(promise => { //fetch-a връща promise...
-                    const authToken = promise.headers.get('Authorization')
-                    document.cookie = `x-auth-token=${authToken}` //записваме токен-а от хедъра в самото cookie 
-                    return promise.json()
-                }).then(() => {
-                    history.push('/login')
-                })
-                // .then(res => this.setState({ pets: res }))
-                // .catch(err => console.log(err))
-    
-        }
+            registerHandler({ name, email, password }).then(() => {
+              history.push("/login");
+            });
+          }
     }
 
     return (
-
+<PageWrapper>
         <main>
             <section className="register">
                 <form onSubmit={onRegisterSubmitHandler}>
@@ -40,9 +33,16 @@ const RegisterPage = ({history}) => {
                         <legend>Register</legend>
                         <p className="form_instructions">Please enter your e-mail and password:</p>
                         <p className="field">
-                            <label htmlFor="username">Username</label>
+                            <label htmlFor="name">Name</label>
                             <span className="input">
-                                <input type="text" name="username" id="username" placeholder="Username" />
+                                <input type="text" name="name" id="name" placeholder="Name" />
+                                <span className="actions"></span>
+                            </span>
+                        </p>
+                        <p className="field">
+                            <label htmlFor="email">Email</label>
+                            <span className="input">
+                                <input type="text" name="email" id="email" placeholder="Email" />
                                 <span className="actions"></span>
                             </span>
                         </p>
@@ -56,7 +56,7 @@ const RegisterPage = ({history}) => {
                         <p className="field">
                             <label htmlFor="rePassword">Repeat Password</label>
                             <span className="input">
-                                <input type="text" name="rePassword" id="rePassword" placeholder="Password" />
+                                <input type="text" name="rePassword" id="rePassword" placeholder="Repeat Password" />
                                 <span className="actions"></span>
                             </span>
                         </p>
@@ -66,6 +66,7 @@ const RegisterPage = ({history}) => {
                 </form>
             </section>
         </main>
+        </PageWrapper>
     )
 }
 export default RegisterPage
