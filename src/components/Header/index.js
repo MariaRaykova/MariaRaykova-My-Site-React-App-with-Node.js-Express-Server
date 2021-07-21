@@ -1,13 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import './index.scss'
-import ButtonDark from '../ButtonDark'
-import ButtonLight from '../ButtonLight'
+// import ButtonDark from '../ButtonDark'
+// import ButtonLight from '../ButtonLight'
+import { useContext,  } from 'react'
+import AuthContext from '../../contexts/AuthContext'
 
+const Header = ()=> {
+     const context = useContext(AuthContext);
 
-
-const Header = () => {
     return (
-
         <header className="site-header">
             <div className="content-limiter">
                 <div id="menuToggle">
@@ -44,9 +45,17 @@ const Header = () => {
                 <div className="header-buttons">
 
                     <i className="fa fa-search"></i>
+                    <div className="second-bar">
+            {context.isLogged ?
+            (<ul><li>Welcome,{context.user?.name}!</li><li><NavLink to="/logout">
+            <i className="fas fa-sign-out-alt"></i> Logout</NavLink></li></ul>)
+            : (<ul>
+                <li><NavLink to="/login"><i className="fas fa-sign-in-alt"></i> LogIn</NavLink></li>
+                <li><NavLink to="/register"><i className="fas fa-register-alt"></i> Register</NavLink></li>
+            </ul>)}
+      
+     </div>
 
-                    <ButtonDark />
-                    <ButtonLight />
                 </div>
             </div>
         </header>

@@ -36,7 +36,7 @@ body {
     display                   : flex;
     flex-flow: column wrap; 
     justify-content           : space-around;
-    align-items               : center;
+    align-products               : center;
     position                  : relative;
     min-height: 100px; 
 }
@@ -46,14 +46,14 @@ body {
     display: flex;
     flex-flow: row wrap; /*хоризонтала, за да подредим логото и nav хоризонтално по-надолу - МАЙ е излишно, защото дефолтно е хоризонтално, а долу с flex:1 сме дали да се разпъват максимално и да се свиват...няма нужда от wrap*/
      justify-content: space-around;/*манипулира празното пространство между елементите*/
-    align-items: center; /*за да са центрирани и по вертикала*/
+    align-products: center; /*за да са центрирани и по вертикала*/
     width: 100%;
 }
 
 
 .header-buttons {
         display    : flex;
-        align-items: center;
+        align-products: center;
 
         .fa-search {
             color       : white;
@@ -132,7 +132,7 @@ nav li {
     color: var(--color-pink-default, lightgray);
 }
 .btn.btn-outline-light a,
-.btn.btn-outline-primary a { /*долу (.site-header-content-list-items>a) сме декларирали сиво за този текст и без двата селектора другия имаше повече тежест и оставаха сиви...за това сложихме и двата класа */
+.btn.btn-outline-primary a { /*долу (.site-header-content-list-products>a) сме декларирали сиво за този текст и без двата селектора другия имаше повече тежест и оставаха сиви...за това сложихме и двата класа */
     color: white;
 } 
 .btn-outline-primary {
@@ -341,7 +341,7 @@ display: none;
     margin:20px;
     display:flex; /*подрежда заглавие, съдърж.и фуутър на един ред*/
     justify-content: center;
-    align-items: stretch; 
+    align-products: stretch; 
     border: 1px solid white;
     overflow: hidden;
 }
@@ -350,14 +350,14 @@ flex-basis: 50%;
 display: flex;
 flex-flow: column wrap;
  justify-content: space-around;
-align-items: flex-start;
+align-products: flex-start;
 padding-left: 40px;
 
 }
 .article-header .article-footer {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-products: center;
 }
 
 .article-header-name{
@@ -385,7 +385,7 @@ font-weight: 700;
 }
 .images-small-wrapper {
   display:flex;
-  align-items:center;
+  align-products:center;
 }
 .image-small {
    margin: 10px;
@@ -517,11 +517,11 @@ img {
    <section>
        <h3>Other articles</h3>
        <ul>
-           <li><a href="#">Item 1</a></li>
-           <li><a href="#">Item 2</a></li>
-           <li><a href="#">Item 3</a></li>
-           <li><a href="#">Item 4</a></li>
-           <li><a href="#">Item 5</a></li>
+           <li><a href="#">Product 1</a></li>
+           <li><a href="#">Product 2</a></li>
+           <li><a href="#">Product 3</a></li>
+           <li><a href="#">Product 4</a></li>
+           <li><a href="#">Product 5</a></li>
        </ul>
    </section>
 </aside>

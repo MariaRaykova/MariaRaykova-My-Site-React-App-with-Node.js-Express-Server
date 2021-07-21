@@ -11,12 +11,26 @@ module.exports = {
 
     post: {
         register: (req, res, next) => {
-            const { username, password } = req.body;
-            models.User.create({ username, password })
+            const { name, email, password, role } = req.body;
+            models.User.create({ name, email, password, role })
                 .then((createdUser) => {
                     const token = utils.jwt.createToken({ id: createdUser._id });
                     res.header("Authorization", token).send(createdUser);
                 }).catch(next)
+        },
+        login: (req, res, next) => {
+            const { email, password } = req.body;
+            models.User.findOne({ email })
+                .then((user) => Promise.all([user, user.matchPassword(password)]))
+                .then(([user, match]) => {
+                    if (!match) {
+                        res.status(401).send('Invalid password');
+                        return;
+                    }
+                    const token = utils.jwt.createToken({ id: user._id });
+                    res.header("Authorization", token).send(user);
+                })
+                .catch(next);
         },
         verifyLogin: (req, res, next) => {
             const token = req.headers.authorization || ''
@@ -48,21 +62,7 @@ module.exports = {
             })
         },
 
-        login: (req, res, next) => {
-            const { username, password } = req.body;
-            models.User.findOne({ username })
-                .then((user) => Promise.all([user, user.matchPassword(password)]))
-                .then(([user, match]) => {
-                    if (!match) {
-                        res.status(401).send('Invalid password');
-                        return;
-                    }
-                    const token = utils.jwt.createToken({ id: user._id });
-                    res.header("Authorization", token).send(user);
-                })
-                .catch(next);
-        },
-
+      
         logout: (req, res, next) => {
             const token = req.cookies[config.authCookieName];
             // console.log('-'.repeat(100));
@@ -78,8 +78,8 @@ module.exports = {
 
     put: (req, res, next) => {
         const id = req.params.id;
-        const { username, password } = req.body;
-        models.User.update({ _id: id }, { username, password })
+        const { name, email, password } = req.body;
+        models.User.update({ _id: id }, { name, email, password })
             .then((updatedUser) => res.send(updatedUser))
             .catch(next)
     },
