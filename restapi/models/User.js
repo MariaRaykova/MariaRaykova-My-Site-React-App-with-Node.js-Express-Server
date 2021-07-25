@@ -29,7 +29,7 @@ const userSchema = new Schema(
             type: Array,
             default: []
         },
-        posts: [{
+        products: [{
             type: ObjectId,
             ref: "Product"
         }],

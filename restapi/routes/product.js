@@ -4,6 +4,8 @@ const { auth }= require('../utils');
 
 router.get('/', controllers.product.get);
 
+router.get('/:category', controllers.product.getByCategory);
+
 router.post('/', auth(), controllers.product.post);
 
 router.put('/:id', auth(), controllers.product.put);

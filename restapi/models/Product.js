@@ -24,6 +24,10 @@ const productSchema = new Schema({
         type: Number,
         required: true,
     },
+    category: [{
+        type: ObjectId,
+        ref: "Category"
+    }],
     author: [{
         type: ObjectId,
         ref: "User"
