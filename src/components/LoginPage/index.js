@@ -10,8 +10,6 @@ const LoginPage = () => {
   const context = useContext(AuthContext);
   const history = useHistory();
  
-  
-
   const onLoginSubmitHandler = (e) => {
     e.preventDefault();
     const email = e.target.email.value;

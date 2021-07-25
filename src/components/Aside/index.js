@@ -10,7 +10,7 @@ const Aside = () => {
                     <li><NavLink activeClassName="nav-link-selected" to="/">Home</NavLink></li>
                     <li><NavLink activeClassName="nav-link-selected" to="/catalog">Catalog</NavLink></li>
                     <li><NavLink activeClassName="nav-link-selected" to="/contact">Contact</NavLink></li>
-                    <li><NavLink activeClassName="nav-link-selected" to="/about">About</NavLink></li>
+                    <li><NavLink activeClassName="nav-link-selected" to="/admin/profile">Admin Profile</NavLink></li>
                 </ul>
 
             </section>

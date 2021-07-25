@@ -1,8 +1,8 @@
 
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import AuthContext from "../../contexts/AuthContext";
-import PageWrapper from "../PageWrapper"
+import AuthContext from "../../../contexts/AuthContext";
+import PageWrapper from "../../PageWrapper"
 
 const AdminProfilePage = () => {
   const context = useContext(AuthContext);
@@ -15,12 +15,12 @@ const AdminProfilePage = () => {
           <h4 className="card-header">Admin Links</h4>
           <ul className="list-group">
             <li className="list-group-product">
-              <Link className="nav-link" to="/create/category">
+              <Link className="nav-link" to="/admin/create/category">
                 Create Category
               </Link>
             </li>
             <li className="list-group-product">
-              <Link className="nav-link" to="/create/product">
+              <Link className="nav-link" to="/admin/create/product">
                 Create Product
               </Link>
             </li>
