@@ -1,9 +1,10 @@
 import {  useEffect, useState } from "react";
 import {Link} from "react-router-dom"
-import Product from "../Product";
+import Product from "../ProductCard";
 import "./index.scss";
 import PageWrapper from "../PageWrapper";
 import { getCategories, getProducts, getProductsByCategory} from "../../utils/getData";
+import ProductCard from "../ProductCard";
 
 
 const Main = (props) => {
@@ -31,7 +32,7 @@ const Main = (props) => {
         <div className="card-container">
           <article className="layout-flex">
             {products?.map((p) => (
-              <Product key={p.id} {...p} />
+              <ProductCard key={p.id} {...p} />
             ))}
           </article>
         </div>

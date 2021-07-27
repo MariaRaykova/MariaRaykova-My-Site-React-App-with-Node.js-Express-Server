@@ -33,17 +33,16 @@ header {
     display: flex;
     // flex-flow: column wrap;
     // justify-content: space-around;
-    // align-products: center;
+    // align-items: center;
     // position: relative;
     min-height: 100px;
 }
 header .content-limiter{
     padding: 20px 0;
     justify-content: space-around;
-    align-products: center;
+    align-items: center;
     @include bp(mobile) {
         
-
         #menuToggle {
             display: block;
             z-index: 3;
@@ -52,14 +51,11 @@ header .content-limiter{
          display: none;
         }
         .header-buttons{
-            display: none;
+            display: block;
         }
     }
 }
-.nav-link-selected {
-    // background: var(--color-blue-default, white);
-    font:bold;
-}
+
 .logo-nd {
     font-size  : 35px;
     font-family: 'blackstand';
@@ -134,7 +130,7 @@ header .content-limiter{
         z-index: 2;
         /* and place it over the hamburger */
     
-        -webkit-touch-callout: none;
+   
 
         &:checked~span {
             opacity: 1;
@@ -194,7 +190,7 @@ header .content-limiter{
 
     background: #ededed;
     list-style-type: none;
-    -webkit-font-smoothing: antialiased;
+ 
     /* to stop flickering of text in safari */
 
     transform-origin: 0% 0%;
@@ -231,21 +227,38 @@ nav ul {
             margin-bottom: 0.5em;
         }
     }
-
 }
+
 nav li {
     margin-right: 15px;
 
 }
 .header-buttons {
     display: flex;
-    align-products: center;
+    align-items: center;
 
-    .fa-search {
+    .fa-search, .fa-shopping-cart {
         color: white;
         margin-right: 20px;
         font-size: 25px;
+      
     }
+    .fa-shopping-cart sub {
+        color: var(--color-blue-default, white);
+        position: relative;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        top: -7px;
+        left: 2px;
+        vertical-align: middle;
+        text-align: center;
+        border-radius: 100%;
+        background: white;
+        line-height: 14px;
+        
+    }
+    .fa-shopping-cart small 
 
     button {
         margin-right: 10px;
@@ -261,7 +274,7 @@ header .content-limiter {
     /*хоризонтала, за да подредим логото и nav хоризонтално по-надолу - МАЙ е излишно, защото дефолтно е хоризонтално, а долу с flex:1 сме дали да се разпъват максимално и да се свиват...няма нужда от wrap*/
     justify-content: space-around;
     /*манипулира празното пространство между елементите*/
-    align-products: center;
+    align-items: center;
     /*за да са центрирани и по вертикала*/
     width: 100%;
 }

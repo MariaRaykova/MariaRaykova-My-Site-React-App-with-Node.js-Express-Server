@@ -20,7 +20,7 @@ const productSchema = new Schema({
         type: Number,
         required: true,
     },
-    likes: {
+    quantity: {
         type: Number,
         required: true,
     },

@@ -1,9 +1,9 @@
 import './index.scss'
 import { useContext } from 'react'
-import AuthContext from '../../contexts/AuthContext';
-import { registerHandler } from '../../utils/submitHandler'
+import AuthContext from '../../../contexts/AuthContext';
+import { registerHandler } from '../../../utils/submitHandler'
 import { useHistory } from 'react-router-dom';
-import PageWrapper from '../PageWrapper';
+import PageWrapper from '../../PageWrapper';
 
 const RegisterPage = () => {
 

@@ -19,8 +19,8 @@ module.exports = {
       .catch(next);
   },
   post: (req, res, next) => {
-    const { userId, name, description, image, selectedCategoryId, price, likes } = req.body;
-    models.Product.create( {author: userId , name, description, imageUrl: image, price, likes, category: selectedCategoryId })
+    const { userId, name, description, image, selectedCategoryId, price, quantity } = req.body;
+    models.Product.create( {author: userId , name, description, imageUrl: image, price, quantity, category: selectedCategoryId })
       .then((createdProduct) => {
         res.send(createdProduct);
         models.User.updateOne({ _id: userId }, { $push: { products: createdProduct } });
@@ -31,10 +31,10 @@ module.exports = {
 
   put: (req, res, next) => {
     const id = req.params.id;
-    const { name, description, imageUrl, likes, category, price } = req.body;
+    const { name, description, imageUrl, quantity, category, price } = req.body;
     models.Product.updateOne(
       { _id: id },
-      { name, description, imageUrl, price, likes, category }
+      { name, description, imageUrl, price, quantity, category }
     )
       .then((updatedProduct) => res.send(updatedProduct))
       .catch(next);
