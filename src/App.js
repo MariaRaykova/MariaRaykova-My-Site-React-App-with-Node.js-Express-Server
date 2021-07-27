@@ -4,14 +4,22 @@ import "./App.scss";
 import AuthContext from "./contexts/AuthContext";
 import { isAuthenticated } from "./utils/auth";
 import { getVerifiedUser } from "./utils/verifyUser";
-// import { setAdmin } from "./utils/seed"
+import {
+  addToCartSorage,
+  getCartStorage,
+  clearCartStorage
+} from "./utils/cartSevices"
+import CartContext from "./contexts/CartContext";
+
 
 function App(props) {
-  // setAdmin();
   const history = useHistory();
   const [userObject, setUserObject] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState(0);
 
   const logInFunc = (user) => {
     setUserObject(user);
@@ -23,12 +31,28 @@ function App(props) {
     window.localStorage.clear();
   };
 
+  const addProductFunc = (product) => {
+     setProducts(oldArray => [...oldArray, product]);
+  };
+
+  addToCartSorage(products);
+
+  const clearCartFunc = () => {
+    clearCartStorage();
+  };
   useEffect(() => {
+    const productList = getCartStorage();
+    if (productList.length > 0) {
+      setProducts(productList);
+      setQuantity(productList.length);
+    }
+
     if (!isAuthenticated()) {
       setLoading(false);
       logOutFunc();
       return;
     }
+
     getVerifiedUser().then((response) => {
       if (response.user) {
         logInFunc(response.user);
@@ -36,11 +60,10 @@ function App(props) {
         logOutFunc();
         history.push("/");
       }
-         //като приключи рекуеста сетваме флага на false
-        setLoading(false);
+
+      setLoading(false);
     });
- 
-  }, []);
+  }, [products.length]);
 
   if (loading) {
     return <div>Loading....</div>;
@@ -56,7 +79,16 @@ function App(props) {
           logOut: logOutFunc
         }}
       >
+        <CartContext.Provider
+          value={{
+            products: products,
+            quantity,
+            addProduct: addProductFunc,
+            clearCart: clearCartFunc
+          }}
+        >
           {props.children}
+        </CartContext.Provider>
       </AuthContext.Provider>
     </div>
   );

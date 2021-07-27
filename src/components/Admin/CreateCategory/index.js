@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import { Link , useHistory} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import PageWrapper from "../../PageWrapper";
 import AuthContext from "../../../contexts/AuthContext";
@@ -9,7 +9,7 @@ import   {getCategories} from "../../../utils/getData"
 
 const CreateCategory = () => {
   const context = useContext(AuthContext);
-  const [name, setName] = useState("");
+  const [, setName] = useState("");
   // const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [categories, setCategories] = useState([]);

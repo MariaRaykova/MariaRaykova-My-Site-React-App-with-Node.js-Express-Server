@@ -23,9 +23,9 @@ const CreateProduct = () => {
     const description = e.target.description.value;
     const image = e.target.image.value;
     const price = e.target.price.value;
-    const likes = e.target.likes.value;
+    const quantity = e.target.quantity.value;
 
-     createProduct( {userId, name, description, image, selectedCategoryId, price, likes} ).then(() => {
+     createProduct( {userId, name, description, image, selectedCategoryId, price, quantity} ).then(() => {
         history.push("/");
       })
   };
@@ -114,13 +114,13 @@ const CreateProduct = () => {
                 </span>
               </p>
               <p className="field">
-                <label htmlFor="likes">Likes</label>
+                <label htmlFor="quantity">quantity</label>
                 <span className="input">
                   <input
                     type="text"
-                    name="likes"
-                    id="likes"
-                    placeholder="likes"
+                    name="quantity"
+                    id="quantity"
+                    placeholder="quantity"
                   />
                   <span className="actions"></span>
                 </span>

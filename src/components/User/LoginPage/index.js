@@ -1,10 +1,10 @@
 import { useContext, useState} from 'react'
-import AuthContext from '../../contexts/AuthContext';
-import ButtonLight from '../ButtonLight'
+import AuthContext from '../../../contexts/AuthContext';
+// import ButtonLight from '../ButtonLight'
 import './index.scss'
-import {logInHandler} from '../../utils/submitHandler'
+import {logInHandler} from '../../../utils/submitHandler'
 import { useHistory, Redirect } from 'react-router-dom';
-import PageWrapper from '../PageWrapper'
+import PageWrapper from '../../PageWrapper'
 
 const LoginPage = () => {
   const context = useContext(AuthContext);

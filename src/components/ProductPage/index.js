@@ -1,6 +1,4 @@
-import './index.scss'
-
-const ProductPage = ( {id, name, description, imageUrl, category, price, likes}) => {
+const ProductPage = ( {id, name, description, imageUrl, category, price, quantity}) => {
   return (
 
     <main>
