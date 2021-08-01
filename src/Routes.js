@@ -12,7 +12,9 @@ import CreateCategory from "./components/Admin/CreateCategory";
 import CreateProduct from "./components/Admin/CreateProduct";
 import ProductPage from "./components/ProductPage"
 import ShoppingCart from "./components/ShoppingCart"
-import Orders from "./components/Orders"
+// import Orders from "./components/Orders"
+import UserProfilePage from "./components/User/ProfilePage"
+
 const Routes = (props) => {
   const context = useContext(AuthContext)
   return (
@@ -22,7 +24,10 @@ const Routes = (props) => {
         <Route path="/product/:category" component={Main} />
         <Route path="/product/:id" exact component={ProductPage} />
         <Route path="/cart" exact component={ShoppingCart} />
-        <Route path="/orders" exact component={Orders} />
+        {/* <Route path="/orders" exact component={Orders} /> */}
+        <Route path="/user/profile/:id" >
+        {context.isLogged && context.user.role === "user" ? (< UserProfilePage />) : (<  Redirect to="/" />)} 
+          </Route>
         <Route path="/login">
           {context.isLogged ? (< Redirect to="/" />) : (< LoginPage />)}
         </Route>

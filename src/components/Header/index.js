@@ -1,3 +1,4 @@
+import {useState, useEffect} from "react"
 import { NavLink } from "react-router-dom";
 import "./index.scss";
 // import ButtonDark from '../ButtonDark'
@@ -9,6 +10,14 @@ import CartContext from "../../contexts/CartContext";
 const Header = () => {
   const context = useContext(AuthContext);
   const cartContext = useContext(CartContext);
+  const [quantity, setQuantity] = useState(0)
+ console.log("cart context quantity izvyn predi" + cartContext.products.length)
+  useEffect(()=>{
+     console.log("cart context quantity vytre " + cartContext.products.length)
+    setQuantity(cartContext.products.length)
+  },[cartContext.quantity])
+  console.log("cart context quantity sled " + cartContext.products.length)
+
   const profilePage = () => {
     if (context.isLogged && context.user.role === "admin") {
       return (
@@ -24,7 +33,7 @@ const Header = () => {
         <li>
           <NavLink
             activeClassName="nav-link-selected"
-            to={`/user/profile/${context.user.id}`}
+            to={`/user/profile/${context.user._id}`}
           >
             User Profile
           </NavLink>

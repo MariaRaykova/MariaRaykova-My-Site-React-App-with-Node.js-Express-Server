@@ -12,7 +12,7 @@ module.exports = {
     post: {
         register: (req, res, next) => {
             const { name, email, password, role } = req.body;
-            models.User.create({ name, email, password, role })
+            models.User.create({ name, email, password, role})
                 .then((createdUser) => {
                     const token = utils.jwt.createToken({ id: createdUser._id });
                     res.header("Authorization", token).send(createdUser);
@@ -90,4 +90,4 @@ module.exports = {
             .then((removedUser) => res.send(removedUser))
             .catch(next)
     }
-};
+}

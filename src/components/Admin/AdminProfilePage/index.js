@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper"
+import Orders from "../Orders"
 
 const AdminProfilePage = () => {
   const context = useContext(AuthContext);
@@ -46,6 +47,7 @@ const AdminProfilePage = () => {
              </li>
           </ul> 
         </div>
+        <Orders/>
       </div>
     </main>
     </PageWrapper>

@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./App.scss";
 import AuthContext from "./contexts/AuthContext";
+import { setAdmin } from "./utils/seed"
 import { isAuthenticated } from "./utils/auth";
 import { getVerifiedUser } from "./utils/verifyUser";
 import {
@@ -21,6 +22,9 @@ function App(props) {
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
+
+
+  setAdmin();
   const logInFunc = (user) => {
     setUserObject(user);
     setIsLogged(true);
@@ -34,7 +38,6 @@ function App(props) {
   const addProductFunc = (product) => {
      setProducts(oldArray => [...oldArray, product]);
   };
-
   addToCartSorage(products);
 
   const clearCartFunc = () => {
@@ -42,9 +45,11 @@ function App(props) {
   };
   useEffect(() => {
     const productList = getCartStorage();
+ 
     if (productList.length > 0) {
       setProducts(productList);
       setQuantity(productList.length);
+        console.log("productList.lenght " )
     }
 
     if (!isAuthenticated()) {
@@ -52,7 +57,6 @@ function App(props) {
       logOutFunc();
       return;
     }
-
     getVerifiedUser().then((response) => {
       if (response.user) {
         logInFunc(response.user);
@@ -63,7 +67,7 @@ function App(props) {
 
       setLoading(false);
     });
-  }, [products.length]);
+  }, []);
 
   if (loading) {
     return <div>Loading....</div>;
