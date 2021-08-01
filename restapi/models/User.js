@@ -15,6 +15,7 @@ const userSchema = new Schema(
         email: {
             type: String,
             unique: true,
+            lowercase: true,
             required: true
         },
         password: {
@@ -23,16 +24,10 @@ const userSchema = new Schema(
         },
         role: {
             type: String,
-            default: "user"
+            default: "user", 
+            enum: ["user", "admin"]
         },
-        history: {
-            type: Array,
-            default: []
-        },
-        products: [{
-            type: ObjectId,
-            ref: "Product"
-        }],
+        orders: [{ type: ObjectId, ref: "Order" }]
     },
     { timestamps: true }
 );
