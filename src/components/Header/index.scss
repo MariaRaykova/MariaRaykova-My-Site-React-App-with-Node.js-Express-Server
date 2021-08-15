@@ -27,9 +27,9 @@
 }
 
 header {
-    background-color: var(--color-pink-default, lightgrey);
+    background-color: white;
     color: var(--color-blue-default, white);
-    border-bottom: 2px solid var(--color-blue-default, white);
+    border-bottom: 2px solid var(--color-blue-default, white);;;
     display: flex;
     // flex-flow: column wrap;
     // justify-content: space-around;
@@ -238,7 +238,7 @@ nav li {
     align-items: center;
 
     .fa-search, .fa-shopping-cart {
-        color: white;
+        color: var(--color-pink-default, white);
         margin-right: 20px;
         font-size: 25px;
       

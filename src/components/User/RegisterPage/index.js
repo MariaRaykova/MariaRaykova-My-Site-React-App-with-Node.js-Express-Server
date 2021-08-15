@@ -1,15 +1,19 @@
 import './index.scss'
 import { useContext } from 'react'
-import AuthContext from '../../../contexts/AuthContext';
-import { registerHandler } from '../../../utils/submitHandler'
 import { useHistory } from 'react-router-dom';
+// import { setAdmin } from "../../../utils/seed"
+import { registerHandler } from '../../../utils/submitHandler'
+import AuthContext from '../../../contexts/AuthContext';
+import Button from "../../Button"
+
+
 import PageWrapper from '../../PageWrapper';
 
 const RegisterPage = () => {
 
     const history = useHistory();
     const context = useContext(AuthContext)
-
+   //  setAdmin();
     const onRegisterSubmitHandler = (e) => {
         e.preventDefault()
         const name = e.target.name.value
@@ -60,8 +64,8 @@ const RegisterPage = () => {
                                 <span className="actions"></span>
                             </span>
                         </p>
-
-                        <input className="btn btn-pink" type="submit" className="submit" value="Register" />
+                        < Button className="btn btn-pink" title="Register" />
+                        {/* <input className="btn btn-pink" type="submit" className="submit" value="Register" /> */}
                     </fieldset>
                 </form>
             </section>

@@ -1,5 +1,9 @@
 .content-container {
     display: flex;
+	max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+   
     // background-color: var(--color-pink-default, lightgrey);
 }
 .content-container aside {
@@ -16,12 +20,20 @@
     /*тук разпъваме по цялата останала 70% ширина*/
     padding: 20px 0 20px 20px;
 }
+.page-title {
+	// background:var(--color-pink-default, lightgrey);
+    flex: 1;
+    /*тук разпъваме по цялата останала 70% ширина*/
+    padding: 20px 0 20px 20px;
+	border-bottom: 3px solid var(--color-blue-default, white);
+}
 .content-limiter {
     max-width: 1600px;
     width: 100%;
     margin: 0 auto;
     display: flex;
 }
+
 // Login reigister
 
 .select-options {
@@ -150,14 +162,30 @@ form textarea:focus {
 	border: 2px solid var(--color-pink-default, lightgrey);
 }
 // button pink
-.btn-pink {
+NavLink, Link, .submit, .btn-pink {
     background: var(--color-pink-default, lightgray);
     border: none;
     color: white;
-border-radius: 0.3rem;
+    
 }
 .btn-pink:hover {
     color: var(--color-pink-default, lightgray);
     background: white;
     border: 2px solid var(--color-pink-default, lightgray);
+}
+NavLink, Link, .btn, button, .submit {
+    border-radius: 10px;
+    padding      : 12px 24px;
+    font-size    : 14px;
+}
+
+.btn:hover, NavLink:hover, Link:hover, .btn:hover , button:hover , .submit:button {
+    cursor: pointer;
+	box-shadow: 0 0 12px 3px #a8193a;
+
+}
+Link, NavLink .submit, .btn, button {
+    background: var(--color-pink-default, lightgray);
+    border: none;
+    color: white
 }

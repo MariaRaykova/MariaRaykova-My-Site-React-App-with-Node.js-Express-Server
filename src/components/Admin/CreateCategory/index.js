@@ -59,10 +59,10 @@ const CreateCategory = () => {
                 className="list-group-item d-flex justify-content-between align-items-center"
               >
                 <strong>{c.name}</strong>
-                <Link to={`/admin/category/delete/${c._id}`}>
+                <Link className=".btn-pink" to={`/admin/category/delete/${c._id}`}>
                   <span className="badge badge-warning badge-pill">Delete</span>
                 </Link>
-                <Link to={`/admin/category/edit/${c._id}`}>
+                <Link className=".btn-pink" to={`/admin/category/edit/${c._id}`}>
                   <span className="badge badge-warning badge-pill">Edit</span>
                 </Link>
               </li>
