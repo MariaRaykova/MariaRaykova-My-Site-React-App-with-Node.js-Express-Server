@@ -10,8 +10,10 @@ import AuthContext from "./contexts/AuthContext";
 import AdminProfilePage from "./components/Admin/AdminProfilePage"
 import CreateCategory from "./components/Admin/CreateCategory";
 import CreateProduct from "./components/Admin/CreateProduct";
+import EditProduct from "./components/Admin/EditProduct"
 import ProductPage from "./components/ProductPage"
 import ShoppingCart from "./components/ShoppingCart"
+
 // import Orders from "./components/Orders"
 import UserProfilePage from "./components/User/ProfilePage"
 
@@ -42,11 +44,14 @@ const Routes = (props) => {
         <Route path="/admin/profile">
           {context.isLogged && context.user.role === "admin" ? (< AdminProfilePage />) : (<  Redirect to="/" />)}
         </Route>
-        <Route path="/admin/create/category">
+        <Route path="/admin/category/create">
           {context.isLogged && context.user.role === "admin" ? (< CreateCategory />) : (<  Redirect to="/" />)}
         </Route>
-        <Route path="/admin/create/product">
+        <Route path="/admin/product/create">
           {context.isLogged && context.user.role === "admin" ? (< CreateProduct />) : (<  Redirect to="/" />)}
+        </Route>
+         <Route path="/admin/product/edit/:id">
+          {context.isLogged && context.user.role === "admin" ? ( <EditProduct />) : (<Redirect to="/" /> )}
         </Route>
       </Switch>
     </BrowserRouter>

@@ -9,6 +9,14 @@ module.exports = {
       })
       .catch(next);
   },
+  getOne: (req, res, next) => {
+    const id = req.params.id;
+    models.Product.find({ _id: id })
+      .then((product) => {
+        return res.send(product);
+      })
+      .catch(next);
+  },
 
   getByCategory: (req, res, next) => {
     models.Product.find({category: req.params.category})

@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./App.scss";
 import AuthContext from "./contexts/AuthContext";
-import { setAdmin } from "./utils/seed"
+
 import { isAuthenticated } from "./utils/auth";
 import { getVerifiedUser } from "./utils/verifyUser";
 import {
@@ -22,9 +22,7 @@ function App(props) {
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
-
-
-  setAdmin();
+ 
   const logInFunc = (user) => {
     setUserObject(user);
     setIsLogged(true);
@@ -38,18 +36,26 @@ function App(props) {
   const addProductFunc = (product) => {
      setProducts(oldArray => [...oldArray, product]);
   };
-  addToCartSorage(products);
+
+  if (products?.length > 0) {
+    addToCartSorage(products);
+  }
+  //има ли значение if-a ??? 
+  // addToCartSorage(products);
 
   const clearCartFunc = () => {
     clearCartStorage();
+    //първо трием сториджа, после сетваме празния масив на products, защото това ще пререндерира и ще влезе в useEffect
+    setProducts([]);
   };
   useEffect(() => {
+    //от тук ще вземе празния сторидж
     const productList = getCartStorage();
- 
+
+   //и няма да сетне на ново products, защото ще е нула
     if (productList.length > 0) {
       setProducts(productList);
       setQuantity(productList.length);
-        console.log("productList.lenght " )
     }
 
     if (!isAuthenticated()) {
@@ -67,7 +73,7 @@ function App(props) {
 
       setLoading(false);
     });
-  }, []);
+  }, [products.length]); //задължително и не quantity
 
   if (loading) {
     return <div>Loading....</div>;

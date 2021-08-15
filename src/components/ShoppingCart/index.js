@@ -49,10 +49,10 @@ const Cart = () => {
 
     createOrder({ email, name, phone, city, address, userId,items})
     .then((res) => {
-      clearCartStorage();
-      setNext(false)
-      setSuccess(true);
-
+       context.clearCart();
+        // clearCartStorage();
+        setNext(false);
+        setSuccess(true);
     });
   };
   const showSuccess = () => (

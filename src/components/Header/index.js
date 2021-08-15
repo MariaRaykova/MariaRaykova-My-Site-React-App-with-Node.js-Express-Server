@@ -11,12 +11,11 @@ const Header = () => {
   const context = useContext(AuthContext);
   const cartContext = useContext(CartContext);
   const [quantity, setQuantity] = useState(0)
- console.log("cart context quantity izvyn predi" + cartContext.products.length)
+
   useEffect(()=>{
-     console.log("cart context quantity vytre " + cartContext.products.length)
-    setQuantity(cartContext.products.length)
-  },[cartContext.quantity])
-  console.log("cart context quantity sled " + cartContext.products.length)
+    setQuantity(cartContext.products?.length)
+  },[cartContext.products?.length])
+
 
   const profilePage = () => {
     if (context.isLogged && context.user.role === "admin") {
@@ -103,7 +102,7 @@ const Header = () => {
           <NavLink to="/cart">
             <i className="fa fa-shopping-cart">
               <sub>
-                <small>{cartContext.quantity}</small>
+                <small>{quantity}</small>
               </sub>
             </i>
           </NavLink>

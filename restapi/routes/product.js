@@ -3,7 +3,7 @@ const router = require('express').Router();
 const { auth }= require('../utils');
 
 router.get('/', controllers.product.get);
-
+router.get('/:id', controllers.product.getOne);
 router.get('/:category', controllers.product.getByCategory);
 
 router.post('/', auth(), controllers.product.post);

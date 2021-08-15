@@ -5,6 +5,7 @@ import "./index.scss";
 import PageWrapper from "../PageWrapper";
 import { getCategories, getProducts, getProductsByCategory} from "../../utils/getData";
 import ProductCard from "../ProductCard";
+import SwipeCover from "../core/Swiper/index.js"
 
 
 const Main = (props) => {
@@ -24,15 +25,17 @@ const Main = (props) => {
 
   return (
     <PageWrapper>
+   
       <main>
-      {categories?.map((c) => 
+      <SwipeCover />
+      {/* {categories?.map((c) => 
                    (<Link to={`/product/${c._id}`} key={c._id}>
                       {c.name}
-                    </Link>))}
+                    </Link>))} */}
         <div className="card-container">
           <article className="layout-flex">
             {products?.map((p) => (
-              <ProductCard key={p.id} {...p} />
+              <ProductCard key={p._id} {...p} />
             ))}
           </article>
         </div>

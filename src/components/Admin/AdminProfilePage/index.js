@@ -16,12 +16,12 @@ const AdminProfilePage = () => {
           <h4 className="card-header">Admin Links</h4>
           <ul className="list-group">
             <li className="list-group-product">
-              <Link className="nav-link" to="/admin/create/category">
+              <Link className="nav-link" to="/admin/category/create">
                 Create Category
               </Link>
             </li>
             <li className="list-group-product">
-              <Link className="nav-link" to="/admin/create/product">
+              <Link className="nav-link" to="/admin/product/create">
                 Create Product
               </Link>
             </li>
