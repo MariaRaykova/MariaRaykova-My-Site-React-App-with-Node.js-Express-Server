@@ -1,7 +1,6 @@
-
+import AuthContext from "../contexts/AuthContext";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
 //пo принцип ако използваме на ниво Router в props имаме history, но ако не ще покажем този вариант
 
 const isAuth = (CurrentComponent) => {

@@ -2,16 +2,15 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./App.scss";
 import AuthContext from "./contexts/AuthContext";
-
 import { isAuthenticated } from "./utils/auth";
 import { getVerifiedUser } from "./utils/verifyUser";
 import {
   addToCartSorage,
   getCartStorage,
   clearCartStorage
-} from "./utils/cartSevices"
+} from "./utils/cartServices";
+import { setAdmin } from "./utils/seed";
 import CartContext from "./contexts/CartContext";
-
 
 function App(props) {
   const history = useHistory();
@@ -22,7 +21,9 @@ function App(props) {
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
- 
+  // setAdmin();
+
+  //context functions
   const logInFunc = (user) => {
     setUserObject(user);
     setIsLogged(true);
@@ -32,30 +33,23 @@ function App(props) {
     setUserObject(null);
     window.localStorage.clear();
   };
-
   const addProductFunc = (product) => {
-     setProducts(oldArray => [...oldArray, product]);
+    setProducts((oldArray) => [...oldArray, product]);
   };
-
   if (products?.length > 0) {
     addToCartSorage(products);
   }
-  //има ли значение if-a ??? 
-  // addToCartSorage(products);
-
   const clearCartFunc = () => {
     clearCartStorage();
-    //първо трием сториджа, после сетваме празния масив на products, защото това ще пререндерира и ще влезе в useEffect
     setProducts([]);
   };
+
   useEffect(() => {
-    //от тук ще вземе празния сторидж
     const productList = getCartStorage();
 
-   //и няма да сетне на ново products, защото ще е нула
     if (productList.length > 0) {
       setProducts(productList);
-      setQuantity(productList.length);
+      setQuantity(products?.length);
     }
 
     if (!isAuthenticated()) {
@@ -70,10 +64,9 @@ function App(props) {
         logOutFunc();
         history.push("/");
       }
-
       setLoading(false);
     });
-  }, [products.length]); //задължително и не quantity
+  }, [products.length]);
 
   if (loading) {
     return <div>Loading....</div>;

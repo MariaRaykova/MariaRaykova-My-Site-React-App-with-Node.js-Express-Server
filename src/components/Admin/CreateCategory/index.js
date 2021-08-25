@@ -1,38 +1,70 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import PageWrapper from "../../PageWrapper";
 import AuthContext from "../../../contexts/AuthContext";
-import {createCategory} from "../adminHandlers";
-import   {getCategories} from "../../../utils/getData"
+import { createCategory } from "../adminHandlers";
+import { getCategories } from "../../../utils/getProductService";
 
 const CreateCategory = () => {
+  const history = useHistory();
   const context = useContext(AuthContext);
-  const [, setName] = useState("");
-  // const [error, setError] = useState(false);
+  const [name, setName] = useState("");
+  const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [categories, setCategories] = useState([]);
 
-
-  const clickCreateSubmitHandler = (e) => {
-    e.preventDefault();
-    const name = e.target.name.value;
-
-    createCategory({ name }).then((data) => {
-      setName(data);
-      e.target.name.value = ""
-      setSuccess(true);
-    });
-  };
+  //това е контролирана форма
+  // const handleChange = (e) => {
+  //   setError("");
+  //   setName(e.target.value);
+  // };
+  //аз ще го направя с неконтролирана
   useEffect(() => {
     getCategories().then((res) => setCategories(res));
   }, [success]);
+
+  // const destroy = productId => {
+  //   deleteProduct(productId, user._id, token).then(data => {
+  //       if (data.error) {
+  //           console.log(data.error);
+  //       } else {
+  //           loadProducts();
+  //       }
+  //   });
+  // };
+  const clickCreateSubmitHandler = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    // setError("");
+    // setSuccess(false);
+    // make request to api to create category
+    createCategory({ name }).then((data) => {
+      // if (data.error) {
+      //   setError(data.error);
+      // }
+      // } else {
+      setName(data);
+      e.target.name.value = "";
+      setSuccess(true);
+      // history.push("/admin/create/category")
+      // }
+    });
+  };
 
   const newCategoryForm = () => (
     <form onSubmit={clickCreateSubmitHandler}>
       <div className="form-group">
         <label className="text-muted">Name</label>
+        {/* <input
+type="text"
+className="form-control"
+onChange={handleChange}
+value={name}
+autoFocus
+required
+/> */}
         <input
           type="text"
           name="name"
@@ -59,12 +91,18 @@ const CreateCategory = () => {
                 className="list-group-item d-flex justify-content-between align-items-center"
               >
                 <strong>{c.name}</strong>
-                <Link className=".btn-pink" to={`/admin/category/delete/${c._id}`}>
+                <Link to={`/admin/category/delete/${c._id}`}>
                   <span className="badge badge-warning badge-pill">Delete</span>
                 </Link>
-                <Link className=".btn-pink" to={`/admin/category/edit/${c._id}`}>
+                <Link to={`/admin/category/edit/${c._id}`}>
                   <span className="badge badge-warning badge-pill">Edit</span>
                 </Link>
+                {/* <span
+                onClick={() => deleteCategory(x._id)}
+                className="badge badge-danger badge-pill"
+              >
+                Delete
+              </span> */}
               </li>
             ))}
           </ul>
@@ -96,15 +134,20 @@ const CreateCategory = () => {
   return (
     <PageWrapper
       title="Add a new category"
-      description={`Hello, ${context.user.name}, ready to add a new category?`}
+      description={`G'day ${context.user.name}, ready to add a new category?`}
     >
       <main>
+        {/* <div className="row">
+          <div className="col-md-8 offset-md-2"> */}
         {/* {showSuccess()}
           {showError()} */}
         {newCategoryForm()}
 
         {goBack()}
         {categoriesList()}
+
+        {/* </div>
+        </div> */}
       </main>
     </PageWrapper>
   );

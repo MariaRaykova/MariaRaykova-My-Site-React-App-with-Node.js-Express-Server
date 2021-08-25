@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import CartContext from "../../contexts/CartContext";
-import { clearCartStorage } from "../../utils/cartSevices";
+import { clearCartStorage } from "../../utils/cartServices";
 import { createOrder } from "../../utils/ordersServices";
 import PageWrapper from "../PageWrapper";
 
@@ -22,11 +22,11 @@ const Cart = () => {
 
   useEffect(() => {
     setItems(context.products);
+
     if (userId !== "") {
       setUserName(authContext.user.name);
       setUserEmail(authContext.user.email);
     }
- 
   }, [next, success, userId, context.quantity]);
 
   const deleteItem = (id) => {};
@@ -47,16 +47,17 @@ const Cart = () => {
     const city = e.target.city.value;
     const address = e.target.address.value;
 
-    createOrder({ email, name, phone, city, address, userId,items})
-    .then((res) => {
-       context.clearCart();
+    createOrder({ email, name, phone, city, address, userId, items }).then(
+      (res) => {
+        context.clearCart();
         // clearCartStorage();
         setNext(false);
         setSuccess(true);
-    });
+      }
+    );
   };
   const showSuccess = () => (
-     <div className="alert alert-info">Thanks for your order!</div> 
+    <div className="alert alert-info">Thanks for your order!</div>
   );
 
   const showItems = () => {
@@ -185,26 +186,22 @@ const Cart = () => {
       title="Shopping Cart"
       // className="container-fluid"
     >
-  
-     {success ? showSuccess() : (
-       <div className="row">
-      
-          {context.quantity > 0 
-          ? (
-              <div className="col-6">
-          {showItems(items)}
-          <h2 className="mb-4">Finish your order</h2>
-          <button onClick={orderDetailsHandler}>Continue</button>
-          {showOrderDetails()}
-          </div>
-          )
-            : (
-              <div className="col-6">
-              {noItemsMessage()}
-               </div>
-              )}
+      {success ? (
+        showSuccess()
+      ) : (
+        <div className="row">
+          {context.quantity > 0 ? (
+            <div className="col-6">
+              {showItems(items)}
+              <h2 className="mb-4">Finish your order</h2>
+              <button onClick={orderDetailsHandler}>Continue</button>
+              {showOrderDetails()}
+            </div>
+          ) : (
+            <div className="col-6">{noItemsMessage()}</div>
+          )}
         </div>
-     )}
+      )}
     </PageWrapper>
   );
 };

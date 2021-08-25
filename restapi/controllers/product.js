@@ -17,7 +17,6 @@ module.exports = {
       })
       .catch(next);
   },
-
   getByCategory: (req, res, next) => {
     models.Product.find({category: req.params.category})
     .populate('category')
@@ -27,12 +26,15 @@ module.exports = {
       .catch(next);
   },
   post: (req, res, next) => {
-    const { userId, name, description, image, selectedCategoryId, price, quantity } = req.body;
-    models.Product.create( {author: userId , name, description, imageUrl: image, price, quantity, category: selectedCategoryId })
+    const { name, description, image, selectedCategoryId, price, quantity } = req.body;
+    console.log("selected cat ot api " + selectedCategoryId)
+    models.Product.create( { name, description, imageUrl: image, price, quantity, category: selectedCategoryId })
       .then((createdProduct) => {
         res.send(createdProduct);
-        models.User.updateOne({ _id: userId }, { $push: { products: createdProduct } });
+        console.log("from restapi " +createdProduct._id )
+        // models.User.updateOne({ _id: userId }, { $push: { products: createdProduct } });
         models.Category.updateOne( {_id: selectedCategoryId}, { $push: {products: createdProduct} });
+        models.Image.create({ url: imageUrl, type: "main", product: createdProduct._id})
       })
       .catch(next);
   },

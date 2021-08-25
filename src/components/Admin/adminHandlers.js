@@ -23,8 +23,8 @@ export const deleteCategory = (id) => {
       console.log(err);
     });
 };
-export const createProduct =(body) => {
-  return fetch("http://localhost:9999/api/product", {
+export const createProduct = (body) => {
+  return fetch(`${API}/api/product`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
@@ -32,12 +32,11 @@ export const createProduct =(body) => {
       Authorization: window.localStorage.getItem("token")
     }
   })
-    .then((promise) => promise.json())
-    .catch((err)=>console.log(err));
-}
-
-export const editProduct = (body, _id) => {
-  return fetch(`${API}/api/product/${_id}`, {
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+};
+export const editProduct = (id, body) => {
+  return fetch(`${API}/api/product/${id}`, {
     method: "PUT",
     body: JSON.stringify(body),
     headers: {
@@ -45,19 +44,22 @@ export const editProduct = (body, _id) => {
       Authorization: window.localStorage.getItem("token")
     }
   })
-    .then((promise) => promise.json())
+    .then((res) => res.json())
     .catch((err) => console.log(err));
 };
 export const uploadImage = (image) => {
+  //задължително с new FormData
   const data = new FormData();
+
   data.append("file", image);
   data.append("upload_preset", "react_ecommerce"); //името, което написахме на новата директория
-  //data.append("cloud_name", "dszjcx6ai"); //моя cloud name от Dashboard
+  //data.append("cloud_name", "dszjcx6ai"); //моя cloud name от Dashboard - става и без това
+
   //от Dashboard -> More -> API Base URL стрелката надолу image upload...
   return fetch("https://api.cloudinary.com/v1_1/dszjcx6ai/image/upload", {
     method: "POST",
     body: data
-  }).then(res=>{
-    return res.json()
-  }).catch((err) => console.log(err));
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 };
