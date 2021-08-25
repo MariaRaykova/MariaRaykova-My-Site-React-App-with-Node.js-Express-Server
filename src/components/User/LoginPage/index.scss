@@ -6,14 +6,14 @@
     flex-direction: column;
     /*подрежда заглавие, съдърж.и фуутър на един ред*/
     justify-content: space-around;
-    align-products    : center;
+    align-items    : center;
     border         : 1px solid white;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    align-products    : center;
+    align-items    : center;
     label, p {
      margin: 20px;
     }

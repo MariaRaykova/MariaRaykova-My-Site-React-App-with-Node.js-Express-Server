@@ -1,3 +1,5 @@
+
+
 @mixin bp($point) {
     @if $point==desktop-large {
         @media (min-width: 1600px) {
@@ -27,9 +29,9 @@
 }
 
 header {
-    background-color: white;
+    background-color: var(--color-pink-default, lightgrey);
     color: var(--color-blue-default, white);
-    border-bottom: 2px solid var(--color-blue-default, white);;;
+    border-bottom: 2px solid var(--color-blue-default, white);
     display: flex;
     // flex-flow: column wrap;
     // justify-content: space-around;
@@ -57,9 +59,15 @@ header .content-limiter{
 }
 
 .logo-nd {
-    font-size  : 35px;
-    font-family: 'blackstand';
-    font-weight: bold;
+    
+    @font-face {
+        font-family: 'Blackstand';
+        font-style: normal;
+        font-weight: normal;
+        font-weight: bold;
+        src: font('Blackstand'), url('/font/Blackstand.woff') format('woff');
+    }
+   
     color      : var(--color-blue-default, white);
 }
 
@@ -238,7 +246,7 @@ nav li {
     align-items: center;
 
     .fa-search, .fa-shopping-cart {
-        color: var(--color-pink-default, white);
+        color: white;
         margin-right: 20px;
         font-size: 25px;
       

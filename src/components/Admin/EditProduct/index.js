@@ -4,7 +4,10 @@ import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper";
 import ProductCard from "../../ProductCard";
 import { editProduct, uploadImage } from "../adminHandlers";
-import { getCategories, getProduct } from "../../../utils/getData";
+import {
+  getCategories,
+  getProductService
+} from "../../../utils/getProductService";
 
 const EditProduct = (props) => {
   const history = useHistory();

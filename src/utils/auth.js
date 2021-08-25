@@ -1,6 +1,7 @@
-
 export const getToken = () => {
-  return window.localStorage.getItem("token");
+  if (window && window.localStorage) {
+    return window.localStorage.getItem("token");
+  }
 };
 
 export const isAuthenticated = () => {
@@ -11,5 +12,3 @@ export const isAuthenticated = () => {
     return false;
   }
 };
-
-

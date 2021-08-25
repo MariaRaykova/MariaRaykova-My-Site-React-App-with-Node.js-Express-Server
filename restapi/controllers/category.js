@@ -2,7 +2,6 @@ const models = require("../models");
 
 module.exports = {
   get: (req, res, next) => {
-   
     models.Category.find()
       .then((categories) => {
         return res.send(categories);

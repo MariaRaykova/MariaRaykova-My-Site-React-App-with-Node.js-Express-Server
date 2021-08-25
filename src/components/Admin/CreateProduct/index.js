@@ -1,28 +1,51 @@
 import { useContext, useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { productActions } from "../../../redux/action/productsActions";
 import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper";
 import { createProduct, uploadImage } from "../adminHandlers";
-import   {getCategories, getProducts} from "../../../utils/getData"
+// import { getCategories, getProducts } from "../../../utils/getProductService";
+import ProductCard from "../../ProductCard";
 
 const CreateProduct = () => {
+
   const history = useHistory();
   const context = useContext(AuthContext);
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  // const [products, setProducts] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  const [loadingUpload, setLoadingUpload] = useState(false);
 
+  const [url, setUrl] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const products = useSelector((state) => state.productsReducer.products);
+  const categories = useSelector((state) => state.productsReducer.categories);
+  const loading = useSelector((state) => state.productsReducer.loading);
+
+  //Actions - с useDispatch dispatch-ваме action-ите
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    //export const productActions = {getAllProducts,getProduct..може и директно да екпортваме функциите в action-ите
+    dispatch(productActions.getAllCategories());
+    dispatch(productActions.getAllProducts());
+  }, []);
+  // useEffect(() => {
+  //   getProducts().then((res) => setProducts(res));
+  //   getCategories().then((res) => setCategories(res));
+  // }, []);
   const handleChangeImage = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingUpload(true);
     uploadImage(e.target.files[0]).then((data) => {
       // if (data.error) {
       //   setError({ ...product, error: data.error });
       // } else {
-      setUrl(data.secure_url );
-      setLoading(false);
+      setUrl(data.secure_url);
+      setLoadingUpload(false);
       // }
     });
   };
@@ -38,16 +61,26 @@ const CreateProduct = () => {
     const image = url ? url : e.target.image.value;
     const price = e.target.price.value;
     const quantity = e.target.quantity.value;
-
-     createProduct( {userId, name, description, image, selectedCategoryId, price, quantity} ).then(() => {
-        history.push("/");
-      })
+console.log("ot handler-a "+selectedCategoryId)
+    createProduct({
+      // userId,
+      name,
+      description,
+      image,
+      selectedCategoryId,
+      price,
+      quantity
+    }).then((res) => {
+       showProductCard(res)
+    });
   };
- 
-  useEffect(() => {
-    getProducts().then((res) => setProducts(res));
-    getCategories().then((res) => setCategories(res));
-  }, []); 
+
+
+  const showProductCard = (product)=>{
+return(
+  <ProductCard {...product}/>
+)
+  }
   const productsList = () => (
     <div className="container-fluid">
       <div className="row">
@@ -63,7 +96,10 @@ const CreateProduct = () => {
                 <strong>{p.description}</strong>
                 <strong>{p.category}</strong>
                 <strong>{p.price}</strong>
-                <Link className=".btn-pink" to={`/admin/product/delete/${p._id}`}>
+                <Link
+                  className=".btn-pink"
+                  to={`/admin/product/delete/${p._id}`}
+                >
                   <span className="badge badge-warning badge-pill">Delete</span>
                 </Link>
                 <Link className=".btn-pink" to={`/admin/product/edit/${p._id}`}>
@@ -78,6 +114,15 @@ const CreateProduct = () => {
   );
   const showLoading = () => {
     if (loading) {
+      return (
+        <div className="alert alert-success">
+          <h2>Loading...</h2>
+        </div>
+      );
+    }
+  };
+  const showLoadingUpload = () => {
+    if (loadingUpload) {
       return (
         <div className="alert alert-success">
           <h2>Loading...</h2>
@@ -131,7 +176,7 @@ const CreateProduct = () => {
                   name="photoFromFile"
                   accept="image/*"
                 />
-                {showLoading()}
+                {showLoadingUpload()}
                 {/* <div>
                   <h1>Uploaded image will be displayed here</h1>
                   <img src={products?.imageUrl} alt="" />
@@ -163,18 +208,21 @@ const CreateProduct = () => {
               </p>
               <p className="field">
                 <label htmlFor="category">Category</label>
-                <select onChange={handleChangeCategory} defaultValue="Categories" >
-                <option>Please select</option>
+                <select
+                  onChange={handleChangeCategory}
+                  defaultValue="Categories"
+                >
+                  <option>Please select</option>
                   {categories?.map((c) => (
-                   (<option
+                    <option
                       key={c._id}
                       value={c._id}
                       className="list-group-item d-flex justify-content-between align-items-center"
                       id={c._id}
                     >
                       {c.name}
-                    </option>)
-                  ))}  
+                    </option>
+                  ))}
                 </select>
               </p>
               <input
@@ -185,7 +233,7 @@ const CreateProduct = () => {
             </fieldset>
           </form>
         </section>
-        {productsList()}
+        {loading? showLoading() : productsList()}
       </main>
     </PageWrapper>
   );

@@ -3,7 +3,7 @@
     display        : flex;
     /*подрежда заглавие, съдърж.и фуутър на един ред*/
     justify-content: center;
-    align-products    : stretch;
+    align-items    : stretch;
     border         : 1px solid white;
     overflow       : hidden;
 }
@@ -13,7 +13,7 @@
     display        : flex;
     flex-flow      : column wrap;
     justify-content: space-around;
-    align-products    : flex-start;
+    align-items    : flex-start;
     padding-left   : 40px;
 
 }
@@ -21,7 +21,7 @@
 .article-header .article-footer {
     display        : flex;
     justify-content: center;
-    align-products    : center;
+    align-items    : center;
 }
 
 .article-header-name {
@@ -54,20 +54,16 @@
 
 .images-small-wrapper {
     display    : flex;
-    align-products: center;
+    align-items: center;
 }
 
 .image-small {
     margin: 10px;
-
 }
 
-img {
+.card-body img {
     max-width: 100%;
-    height   : auto;
-     height: 380px;
-     padding: 30px 5px;
-
+    height   : 360px;
 }
 
 .article-details {
