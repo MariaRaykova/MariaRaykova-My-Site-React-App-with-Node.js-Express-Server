@@ -42,7 +42,7 @@ const EditProduct = (props) => {
       // if (data.error) {
       //   setError({ ...product, error: data.error });
       // } else {
-      setNewProductArray({ ...newProductArray, imageUrl: data.secure_url });
+      setNewProductArray({ ...newProductArray, image: data.secure_url });
       setLoading(false);
       // }
     });
@@ -143,8 +143,8 @@ const EditProduct = (props) => {
                 <label htmlFor="image">Image URL</label>
                 <span className="input">
                   <input
-                    onChange={handleChange("imageUrl")}
-                    value={newProductArray?.imageUrl}
+                    onChange={handleChange("image")}
+                    value={newProductArray?.image}
                     type="text"
                     name="image"
                     id="image"
@@ -163,7 +163,7 @@ const EditProduct = (props) => {
                 />
                 <div>
                   <h1>Uploaded image will be displayed here</h1>
-                  <img src={newProductArray?.imageUrl} alt="" />
+                  <img src={newProductArray?.image} alt="" />
                 </div>
               </label>
               <p className="field">

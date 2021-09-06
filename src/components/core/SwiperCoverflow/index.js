@@ -43,7 +43,7 @@ export default function SwiperCoverflow() {
           <SwiperSlide
             key={p._id}
             style={{
-              backgroundImage: `url(${p.imageUrl}/600/300)`,
+              backgroundImage: `url(${p.image}/600/300)`,
               backgroundSize: "cover"
             }}
           >
@@ -51,7 +51,7 @@ export default function SwiperCoverflow() {
           </SwiperSlide>
         ))}
         {/* <SwiperSlide key={p._id}>
-            <img src={`${p.imageUrl}/800/300`} alt="swipe" />
+            <img src={`${p.image}/800/300`} alt="swipe" />
           </SwiperSlide> */}
       </Swiper>
     </div>

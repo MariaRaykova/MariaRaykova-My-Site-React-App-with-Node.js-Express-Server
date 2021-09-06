@@ -22,8 +22,8 @@ const CreateCategory = () => {
   // };
   //аз ще го направя с неконтролирана
   useEffect(() => {
-    getCategories().then((res) => setCategories(res));
-  }, [success]);
+    getCategories().then((res) => setCategories(res));  
+  }, []);
 
   // const destroy = productId => {
   //   deleteProduct(productId, user._id, token).then(data => {

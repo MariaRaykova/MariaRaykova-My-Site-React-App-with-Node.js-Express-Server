@@ -8,7 +8,6 @@ module.exports = {
             .then((user) => res.send(user))
             .catch((err) => res.status(500).send("Error"))
     },
-
     post: {
         register: (req, res, next) => {
             const { name, email, password, role } = req.body;
@@ -61,8 +60,6 @@ module.exports = {
                 })
             })
         },
-
-      
         logout: (req, res, next) => {
             const token = req.cookies[config.authCookieName];
             // console.log('-'.repeat(100));
@@ -75,7 +72,6 @@ module.exports = {
                 .catch(next);
         }
     },
-
     put: (req, res, next) => {
         const id = req.params.id;
         const { name, email, password } = req.body;
@@ -83,7 +79,6 @@ module.exports = {
             .then((updatedUser) => res.send(updatedUser))
             .catch(next)
     },
-
     delete: (req, res, next) => {
         const id = req.params.id;
         models.User.deleteOne({ _id: id })

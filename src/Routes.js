@@ -12,6 +12,7 @@ import CreateProduct from "./components/Admin/CreateProduct";
 import AuthContext from "./contexts/AuthContext";
 import ShoppingCart from "./components/ShoppingCart";
 import EditProduct from "./components/Admin/EditProduct";
+import AddImage from "./components/Admin/AddImage";
 
 // import CreateCategory from "./components/CreateCategory";
 // import CreateProduct from "./components/CreateProduct";
@@ -70,6 +71,13 @@ const Routes = () => {
         <Route path="/admin/product/edit/:id">
           {context.isLogged && context.user.role === "admin" ? (
             <EditProduct />
+          ) : (
+            <Redirect to="/" />
+          )}
+        </Route>
+        <Route path="/admin/image/add/product/:id">
+          {context.isLogged && context.user.role === "admin" ? (
+            <AddImage />
           ) : (
             <Redirect to="/" />
           )}
