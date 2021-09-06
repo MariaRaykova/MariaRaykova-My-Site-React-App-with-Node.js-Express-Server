@@ -12,10 +12,10 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
-    imageUrl: {
+    images: [{
         type: String,
         required: true,
-    },
+    }],
     price: {
         type: Number,
         required: true,
@@ -28,10 +28,10 @@ const productSchema = new Schema({
         type: ObjectId,
         ref: "Category"
     }],
-    author: [{
+    author: {
         type: ObjectId,
         ref: "User"
-    }]
+    }
 }, {
     timestamps: {
         createdAt: 'created_at'

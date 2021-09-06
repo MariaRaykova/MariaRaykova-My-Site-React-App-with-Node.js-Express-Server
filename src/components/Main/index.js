@@ -11,7 +11,7 @@ import PageWrapper from "../PageWrapper";
 import AuthContext from "../../contexts/AuthContext";
 import SwiperCoverflow from "../core/SwiperCoverflow";
 import { useDispatch, useSelector } from "react-redux";
-import { productActions } from "../../redux/action/productsActions";
+import { getAllCategories, getAllProducts, getAllProductsByCategory } from "../../redux/action/productsActions";
 
 const Main = (props) => {
   const context = useContext(AuthContext);
@@ -24,18 +24,21 @@ const Main = (props) => {
 
   //Actions - с useDispatch dispatch-ваме action-ите
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     //export const productActions = {getAllProducts,getProduct..може и директно да екпортваме функциите в action-ите
-    dispatch(productActions.getAllCategories());
+    dispatch(getAllCategories());
+    
     if (props.match.params.category) {
       dispatch(
-        productActions.getAllProductsByCategory(props.match.params.category)
+        getAllProductsByCategory(props.match.params.category)
       );
     } else {
-      dispatch(productActions.getAllProducts());
+      dispatch(getAllProducts());
     }
+  
   }, []);
+  
   // useEffect(() => {
   //   getCategories().then((res) => setCategories(res));
 
@@ -47,17 +50,22 @@ const Main = (props) => {
   //     getProducts().then((res) => setProducts(res));
   //   }
   // }, [props.match.params]);
-  console.log("main categories " + categories)
+  const categoryFilter = () => {
+    if(categories){
+      return categories.map((c) => (
+        <Link to={`/product/category/${c.name}`} key={c._id}>
+          {c.name}
+        </Link>
+      ))
+    }
+  }
+  
+
   return (
     <PageWrapper>
       <main>
         {/* <SwiperCoverflow /> */}
-        {categories?.map((c) => (
-          <Link to={`/product/category/${c._id}`} key={c._id}>
-            {c.name}
-          </Link>
-        ))}
-
+          {categoryFilter()}
         <div className="card-container">
           <article className="layout-flex">
             {/* за да заредим всички items */}

@@ -47,6 +47,22 @@ export const editProduct = (id, body) => {
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
+export const createImage = (body) => {
+  console.log("ot admin handler" + JSON.stringify(body))
+  return fetch(`${API}/api/product/image`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 export const uploadImage = (image) => {
   //задължително с new FormData
   const data = new FormData();

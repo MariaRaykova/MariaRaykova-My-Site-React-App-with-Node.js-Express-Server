@@ -1,16 +1,17 @@
 import { API } from "../../config";
 import {
-  getProductService,
+  getProduct,
   getProducts,
   getCategories,
-  getProductsByCategory
+  getProductsByCategory,
+  getImagesByProduct
 } from "../../utils/getProductService";
-//https://github.com/cornflourblue/react-hooks-redux-registration-login-example/
-//https://github.com/TheCoderDream/React-Ecommerce-App-with-Redux/
-//https://github.com/IbrahiimKamal/react-redux-hooks-ecommerce
-//https://github.com/levelopers/Ecommerce-Reactjs/
+import { uploadImage, createImage} from "../../components/Admin/adminHandlers"
 
-const getAllProducts = () => (dispatch) => {
+
+//add to cart 
+//
+export const getAllProducts = () => (dispatch) => {
   dispatch({
     type: GET_ALL_PRODUCTS_REQUEST
   });
@@ -30,7 +31,7 @@ const getAllProducts = () => (dispatch) => {
       return error;
     });
 };
-const getAllCategories = () => (dispatch) => {
+export const getAllCategories = () => (dispatch) => {
   dispatch({
     type: GET_ALL_CATEGORIES_REQUEST
   });
@@ -40,6 +41,7 @@ const getAllCategories = () => (dispatch) => {
         type: GET_ALL_CATEGORIES_SUCCESS,
         payload: res
       });
+      
       return res;
     })
     .catch((error) => {
@@ -51,11 +53,11 @@ const getAllCategories = () => (dispatch) => {
     });
 };
 
-const getProduct = (id) => (dispatch) => {
+export const getSingleProduct = (id) => (dispatch) => {
   dispatch({
     type: GET_PRODUCT_REQUEST
   });
-  getProductService(id)
+  getProduct(id)
     .then((product) => {
       dispatch({
         type: GET_PRODUCT_SUCCESS,
@@ -71,7 +73,8 @@ const getProduct = (id) => (dispatch) => {
     });
 };
 
-const getAllProductsByCategory = (queryParam) => (dispatch) => {
+export const getAllProductsByCategory = (queryParam) => (dispatch) => {
+
   dispatch({
     type: GET_PRODUCTS_BY_CATEGORY_REQUEST
   });
@@ -92,6 +95,57 @@ const getAllProductsByCategory = (queryParam) => (dispatch) => {
     });
 };
 
+export const uploadImageAction = (image) => (dispatch) => {
+  dispatch({
+    type: UPLOAD_IMAGE_REQUEST
+  });
+  uploadImage(image)
+  .then((res) => {
+      dispatch({
+        type: UPLOAD_IMAGE_SUCCESS,
+        payload: res
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: UPLOAD_IMAGE_FAIL,
+        payload: { err }
+      });
+      return err;
+    });
+};
+export const addImageAction = (body) => (dispatch) => {
+  dispatch({
+    type: ADD_IMAGE_REQUEST
+  });
+  createImage(body)
+  .then((res) => {
+      dispatch({
+        type: ADD_IMAGE_SUCCESS,
+        payload:res
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: ADD_IMAGE_FAIL,
+        payload: { err }
+      });
+      return err;
+    });
+};
+export const clearUrl= () => (dispatch) => {
+  dispatch({
+    type: UPLOAD_IMAGE_CLEAR,
+    payload: null
+  });
+};
+// export const addImageToList = (url) => (dispatch) => {
+//   console.log("ot action url-a " + url)
+//   dispatch({
+//     type: ADD_IMAGE_TO_LIST, 
+//     newImage: url
+//   });
+// };
 // export const search=(text)=>dispatch=>{
 //   dispatch({
 //     type:SEARCH,
@@ -147,19 +201,14 @@ const getAllProductsByCategory = (queryParam) => (dispatch) => {
 // export const SEARCH_REQUEST = "SEARCH";
 // export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 // export const SEARCH_FAIL = "SEARCH_FAIL";
-export const productActions = {
-  getAllProducts,
-  getProduct,
-  getAllCategories,
-  getAllProductsByCategory
-};
+
 export const GET_ALL_PRODUCTS_REQUEST = "GET_ALL_PRODUCTS_REQUEST";
 export const GET_ALL_PRODUCTS_SUCCESS = "GET_ALL_PRODUCTS_SUCCESS";
 export const GET_ALL_PRODUCTS_FAIL = "GET_ALL_PRODUCTS_FAIL";
 
-export const GET_ALL_CATEGORIES_REQUEST = "GET_ALL_PRODUCTS_REQUEST";
-export const GET_ALL_CATEGORIES_SUCCESS = "GET_ALL_PRODUCTS_SUCCESS";
-export const GET_ALL_CATEGORIES_FAIL = "GET_ALL_PRODUCTS_FAIL";
+export const GET_ALL_CATEGORIES_REQUEST = "GET_ALL_CATEGORIES_REQUEST";
+export const GET_ALL_CATEGORIES_SUCCESS = "GET_ALL_CATEGORIES_SUCCESS";
+export const GET_ALL_CATEGORIES_FAIL = "GET_ALL_CATEGORIES_FAIL";
 
 export const GET_PRODUCT_REQUEST = "GET_PRODUCT_REQUEST";
 export const GET_PRODUCT_SUCCESS = "GET_PRODUCT_SUCCESS";
@@ -170,3 +219,14 @@ export const GET_PRODUCTS_BY_CATEGORY_REQUEST =
 export const GET_PRODUCTS_BY_CATEGORY_SUCCESS =
   "GET_PRODUCTS_BY_CATEGORY_SUCCESS";
 export const GET_PRODUCTS_BY_CATEGORY_FAIL = "GET_PRODUCTS_BY_CATEGORY_FAIL";
+
+
+export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST";
+export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
+export const UPLOAD_IMAGE_FAIL = "UPLOAD_IMAGE_FAIL";
+export const UPLOAD_IMAGE_CLEAR = "UPLOAD_IMAGE_CLEAR";
+
+export const ADD_IMAGE_REQUEST = "ADD_IMAGE_REQUEST";
+export const ADD_IMAGE_SUCCESS = "ADD_IMAGE_SUCCESS";
+export const ADD_IMAGE_FAIL = "ADD_IMAGE_FAIL";
+export const ADD_IMAGE_TO_LIST = "ADD_IMAGE_TO_LIST";

@@ -3,22 +3,19 @@ const Schema = mongoose.Schema;
 const Model = mongoose.model;
 const { String, ObjectId } = Schema.Types;
 
-const imageSchema = new Schema(
+const imageListSchema = new Schema(
   {
-    url: {
+    url: [{
       type: String,
       required: true,
-
-    },
+    }],
     type: {
-        type: String,
-        required: true,
-      },
-    product: [{
-      type: ObjectId,
-      ref: "Product"
-  }],
-
+      type: String,
+      required: true,
+    },
+    productId: {
+      type: String
+    },
   },
   {
     timestamps: {
@@ -27,4 +24,4 @@ const imageSchema = new Schema(
   }
 );
 
-module.exports = new Model("Image", imageSchema);
+module.exports = new Model("ImageList", imageListSchema);

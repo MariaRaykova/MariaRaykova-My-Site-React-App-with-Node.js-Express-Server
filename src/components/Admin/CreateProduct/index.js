@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { productActions } from "../../../redux/action/productsActions";
+import { getAllProducts, getAllCategories, uploadImageAction, clearUrl } from "../../../redux/action/productsActions";
 import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper";
 import { createProduct, uploadImage } from "../adminHandlers";
@@ -14,41 +14,55 @@ const CreateProduct = () => {
   const context = useContext(AuthContext);
   // const [products, setProducts] = useState([]);
   // const [categories, setCategories] = useState([]);
-  const [loadingUpload, setLoadingUpload] = useState(false);
+  // const [loadingUpload, setLoadingUpload] = useState(false);
 
-  const [url, setUrl] = useState("");
+  // const [url, setUrl] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [image, setImage] = useState(null);
+const [product, setProduct] = useState()
 
   const products = useSelector((state) => state.productsReducer.products);
   const categories = useSelector((state) => state.productsReducer.categories);
   const loading = useSelector((state) => state.productsReducer.loading);
-
+  const url = useSelector((state) => state.productsReducer.url);
   //Actions - с useDispatch dispatch-ваме action-ите
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     //export const productActions = {getAllProducts,getProduct..може и директно да екпортваме функциите в action-ите
-    dispatch(productActions.getAllCategories());
-    dispatch(productActions.getAllProducts());
+    dispatch(getAllProducts());
+    dispatch(getAllCategories());
+
   }, []);
+  const handleChangeImage = (e) => {
+    e.preventDefault();
+    dispatch(uploadImageAction(e.target.files[0]))
+  };
+
+  const showUploadedImage = () => {
+    if (url) {
+      return (<img alt="11" src={url} width="80" height="80" />)
+    }
+  }
+  console.log("create url " + url)
+
   // useEffect(() => {
   //   getProducts().then((res) => setProducts(res));
   //   getCategories().then((res) => setCategories(res));
   // }, []);
-  const handleChangeImage = (e) => {
-    e.preventDefault();
-    setLoadingUpload(true);
-    uploadImage(e.target.files[0]).then((data) => {
-      // if (data.error) {
-      //   setError({ ...product, error: data.error });
-      // } else {
-      setUrl(data.secure_url);
-      setLoadingUpload(false);
-      // }
-    });
-  };
+
+  // const handleChangeImage = (e) => {
+  //   e.preventDefault();
+  //   setLoadingUpload(true);
+  //   uploadImage(e.target.files[0]).then((data) => {
+  //     // if (data.error) {
+  //     //   setError({ ...product, error: data.error });
+  //     // } else {
+  //     setUrl(data.secure_url);
+  //     setLoadingUpload(false);
+  //     // }
+  //   });
+  // };
   const handleChangeCategory = (e) => {
     setSelectedCategoryId(e.target.value);
   };
@@ -58,81 +72,27 @@ const CreateProduct = () => {
     const userId = context.user._id;
     const name = e.target.name.value;
     const description = e.target.description.value;
-    const image = url ? url : e.target.image.value;
+    const imageUrl = url ? url : e.target.image.value;
     const price = e.target.price.value;
     const quantity = e.target.quantity.value;
-console.log("ot handler-a "+selectedCategoryId)
-    createProduct({
-      // userId,
-      name,
-      description,
-      image,
-      selectedCategoryId,
-      price,
-      quantity
-    }).then((res) => {
-       showProductCard(res)
-    });
-  };
-
-
-  const showProductCard = (product)=>{
-return(
-  <ProductCard {...product}/>
-)
-  }
-  const productsList = () => (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-12">
-          <h2 className="text-center">All Categories</h2>
-          <ul className="list-group">
-            {products?.map((p) => (
-              <li
-                key={p._id}
-                className="list-group-item d-flex justify-content-between align-items-center"
-              >
-                <strong>{p.name}</strong>
-                <strong>{p.description}</strong>
-                <strong>{p.category}</strong>
-                <strong>{p.price}</strong>
-                <Link
-                  className=".btn-pink"
-                  to={`/admin/product/delete/${p._id}`}
-                >
-                  <span className="badge badge-warning badge-pill">Delete</span>
-                </Link>
-                <Link className=".btn-pink" to={`/admin/product/edit/${p._id}`}>
-                  <span className="badge badge-warning badge-pill">Edit</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-  const showLoading = () => {
-    if (loading) {
-      return (
-        <div className="alert alert-success">
-          <h2>Loading...</h2>
-        </div>
-      );
+    console.log("ot create submit image " + imageUrl)
+    createProduct({ name, description, imageUrl, selectedCategoryId, price, quantity }).then((res) => {
+        setProduct(res)
+        dispatch(clearUrl())
+      });
     }
-  };
-  const showLoadingUpload = () => {
-    if (loadingUpload) {
+
+    const showProductCard = (product) => {
       return (
-        <div className="alert alert-success">
-          <h2>Loading...</h2>
-        </div>
-      );
+        <ProductCard {...product} />
+      )
     }
-  };
-  return (
-    <PageWrapper>
-      <main>
+      // const showProductCard = (product)=>{
+      //     return(
+      //       <ProductCard {...product}/>
+      //     )
+      //   }
+      const showCreateForm = () => (
         <section className="create">
           <form onSubmit={onCreateSubmitHandler}>
             <fieldset>
@@ -169,19 +129,32 @@ return(
                   <span className="actions"></span>
                 </span>
               </p>
-              <label className="btn btn-secondary">
+              <label className="btn-secondary">
                 <input
                   onChange={handleChangeImage}
                   type="file"
                   name="photoFromFile"
                   accept="image/*"
                 />
-                {showLoadingUpload()}
-                {/* <div>
-                  <h1>Uploaded image will be displayed here</h1>
-                  <img src={products?.imageUrl} alt="" />
-                </div> */}
+                {showLoading()}
+                <div>
+                  <p>Uploaded image will be displayed here</p>
+                  {showUploadedImage()}
+                </div>
               </label>
+              {/* <label className="btn btn-secondary">
+          <input
+            onChange={handleChangeImage}
+            type="file"
+            name="photoFromFile"
+            accept="image/*"
+          />
+          {showLoadingUpload()}
+          {/* <div>
+            <h1>Uploaded image will be displayed here</h1>
+            <img src={products?.image} alt="" />
+          </div> 
+        </label> */}
               <p className="field">
                 <label htmlFor="price">Price</label>
                 <span className="input">
@@ -233,9 +206,65 @@ return(
             </fieldset>
           </form>
         </section>
-        {loading? showLoading() : productsList()}
-      </main>
-    </PageWrapper>
-  );
-};
-export default CreateProduct;
+
+      );
+      const productsList = () => (
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+
+              <h2 className="text-center">All Products</h2>
+              <ul className="list-group">
+                {products?.map((p) => (
+                  <li
+                    key={p._id}
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <strong>{p.name}</strong>
+                    <strong>{p.description}</strong>
+                    <strong>{p.category.name}</strong>
+                    <strong>{p.price}</strong>
+                    <Link
+                      className=".btn-pink"
+                      to={`/admin/product/delete/${p._id}`}
+                    >
+                      <span className="badge badge-warning badge-pill">Delete</span>
+                    </Link>
+                    <Link className=".btn-pink" to={`/admin/product/edit/${p._id}`}>
+                      <span className="badge badge-warning badge-pill">Edit</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      );
+      const showLoading = () => {
+        if (loading) {
+          return (
+            <div className="alert alert-success">
+              <h2>Loading...</h2>
+            </div>
+          );
+        }
+      };
+      // const showLoadingUpload = () => {
+      //   if (loadingUpload) {
+      //     return (
+      //       <div className="alert alert-success">
+      //         <h2>Loading...</h2>
+      //       </div>
+      //     );
+      //   }
+      // };
+      return (
+        <PageWrapper>
+          <main>
+            {product ? showProductCard(product) : showCreateForm()}
+            {loading ? showLoading() : productsList()}
+          </main>
+        </PageWrapper>
+      );
+    };
+    export default CreateProduct;

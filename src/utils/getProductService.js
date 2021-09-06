@@ -12,7 +12,7 @@ export const getProducts = () => {
       console.log(err);
     });
 };
-export const getProductService = (id) => {
+export const getProduct = (id) => {
   return fetch(`${API}/api/product/${id}`)
     .then((res) => res.json())
     .catch((err) => {
@@ -21,10 +21,12 @@ export const getProductService = (id) => {
 };
 
 export const getProductsByCategory = (queryParam) => {
-  const category = queryParam ? queryParam : "";
-  return fetch(`${API}/api/product/category/${category}`)
+
+  return fetch(`${API}/api/category/${queryParam}`)
     .then((res) => res.json())
     .catch((err) => {
       console.log(err);
     });
 };
+
+
