@@ -5,40 +5,37 @@ import CartContext from "../../contexts/CartContext";
 import { clearCartStorage } from "../../utils/cartServices";
 import { createOrder } from "../../utils/ordersServices";
 import PageWrapper from "../PageWrapper";
+import { emptyCart, loadCart } from "../../redux/action/cartActions";
+import { useDispatch, useSelector } from "react-redux";
+import CartItem from "../CartItem";
 
 const Cart = () => {
   const history = useHistory();
-  const context = useContext(CartContext);
   const authContext = useContext(AuthContext);
-  const [items, setItems] = useState([]);
   const [next, setNext] = useState(false);
   const [success, setSuccess] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const userId = authContext.user?._id ? authContext.user?._id : "";
-  // const index = 0;
-  // const [products, s] = useState([]);
-  // const [run, setRun] = useState(false);
+  const cartProducts = useSelector((state) => state.cartReducer.cartProducts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setItems(context.products);
-
-    if (userId !== "") {
+    dispatch(loadCart());
+       if (userId !== "") {
       setUserName(authContext.user.name);
       setUserEmail(authContext.user.email);
     }
-  }, [next, success, userId, context.quantity]);
-
-  const deleteItem = (id) => {};
+  }, []);
 
   const orderDetailsHandler = () => {
     setNext(true);
   };
-  // const getTotal = () => {
-  //   return items.reduce((currentValue, nextValue) => {
-  //     return currentValue + nextValue.count * nextValue.price;
-  //   }, 0);
-  // };
+  const getTotal = () => {
+    return cartProducts.reduce((total, currItem) => {
+      return total + currItem.count * currItem.product.price;
+    }, 0);
+  };
   const onOrderSubmitHandler = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -63,25 +60,11 @@ const Cart = () => {
   const showItems = () => {
     return (
       <div>
-        <h2>You have {`${context.quantity}`} items in your cart</h2>
+        <h3>You have {`${cartProducts?.length}`} items in your cart</h3>
         <hr />
         <ul className="list-group">
-          {items?.map((i) => (
-            <li
-              key={i._id}
-              className="list-group-item d-flex justify-content-between align-items-center"
-            >
-              {/* <strong>{i._id}</strong> */}
-              {/* <strong>{i.index}</strong> */}
-              <strong>{i.name}</strong>
-              <strong>{i.price}</strong>
-              <span
-                onClick={() => deleteItem(i._id)}
-                className="badge badge-danger badge-pill"
-              >
-                Delete
-              </span>
-            </li>
+          {cartProducts?.map((i) => (
+            <CartItem  key={i.product._id} {...i} />
           ))}
         </ul>
       </div>
@@ -89,9 +72,9 @@ const Cart = () => {
   };
 
   const noItemsMessage = () => (
-    <h2>
+    <h3>
       Your cart is empty. <br /> <Link to="/">Continue shopping</Link>
-    </h2>
+    </h3>
   );
   const showOrderDetails = (items, userId) => {
     if (next) {
@@ -113,18 +96,6 @@ const Cart = () => {
                   <span className="actions"></span>
                 </span>
               </p>
-              {/* <p className="field">
-                <label htmlFor="firstName">First Name</label>
-                <span className="input">
-                  <input
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    placeholder="firstName"
-                  />
-                  <span className="actions"></span>
-                </span>
-              </p> */}
               <p className="field">
                 <label htmlFor="name">Name</label>
                 <span className="input">
@@ -189,19 +160,29 @@ const Cart = () => {
       {success ? (
         showSuccess()
       ) : (
-        <div className="row">
-          {context.quantity > 0 ? (
-            <div className="col-6">
-              {showItems(items)}
-              <h2 className="mb-4">Finish your order</h2>
-              <button onClick={orderDetailsHandler}>Continue</button>
-              {showOrderDetails()}
+        <div>
+        <div className="card">
+          {cartProducts?.length > 0 ? (
+            <div className="card-body">
+              {showItems(cartProducts)}
+              <div className="card-footer">
+                      <div className="pull-right" style={{margin: '5px', paddingRight: '70px'}}>
+                          Total price: <b>{getTotal()}€</b>
+                      </div>
+              </div>
             </div>
           ) : (
             <div className="col-6">{noItemsMessage()}</div>
           )}
         </div>
+        <h5 className="card-header">Finish your order</h5>
+              <button className="btn-pink" onClick={orderDetailsHandler}>Continue</button>
+              <button className="btn-pink" onClick={()=>dispatch(emptyCart())}>Clear Cart</button>
+              {showOrderDetails()}
+        </div>
       )}
+      
+                  
     </PageWrapper>
   );
 };

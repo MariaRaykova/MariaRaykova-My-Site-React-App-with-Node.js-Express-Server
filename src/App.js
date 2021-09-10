@@ -5,12 +5,16 @@ import AuthContext from "./contexts/AuthContext";
 import { isAuthenticated } from "./utils/auth";
 import { getVerifiedUser } from "./utils/verifyUser";
 import {
-  addToCartSorage,
+  addToCartStorage,
   getCartStorage,
   clearCartStorage
 } from "./utils/cartServices";
+import store from "./redux/store";
 import { setAdmin } from "./utils/seed";
 import CartContext from "./contexts/CartContext";
+import { loadCart } from "./redux/action/cartActions";
+
+import { useDispatch, useSelector } from "react-redux";
 
 function App(props) {
   const history = useHistory();
@@ -20,10 +24,8 @@ function App(props) {
 
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
 
-  // setAdmin();
-
-  //context functions
   const logInFunc = (user) => {
     setUserObject(user);
     setIsLogged(true);
@@ -37,7 +39,7 @@ function App(props) {
     setProducts((oldArray) => [...oldArray, product]);
   };
   if (products?.length > 0) {
-    addToCartSorage(products);
+    addToCartStorage(products);
   }
   const clearCartFunc = () => {
     clearCartStorage();

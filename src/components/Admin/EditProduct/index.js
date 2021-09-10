@@ -32,9 +32,6 @@ const EditProduct = (props) => {
     getCategories().then((res) => setCategories(res));
   }, []);
 
-  //за всяка промяна на някое от полетата добавяме новия запис в новия масив от продукти
-
-  //ако качваме снимка ще вземем самия файл за upload
   const handleChangeImage = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -48,7 +45,6 @@ const EditProduct = (props) => {
     });
   };
 
-  //ако имаме промяна в някое друго поле вземаме името на полето и новата му стойност и го сетваме в новия масив от продукти
   const handleChange = (inputName) => (e) => {
     const inputNewValue = e.target.value;
     setNewInputData({ inputName, inputNewValue });
@@ -80,25 +76,7 @@ const EditProduct = (props) => {
       );
     }
   };
-  // const showError = () => (
-  //   <div
-  //     className="alert alert-danger"
-  //     style={{ display: error ? "" : "none" }}
-  //   >
-  //     {error}
-  //   </div>
-  // );
-  //ако upload-ваме с widget...
-  // let widget = window.cloudinary.createUploadWidget(
-  //   {
-  //     cloudName: "dszjcx6ai",
-  //     uploadPreset: "React eCommerce"
-  //   },
-  //   (error, result) => {}
-  // );
-  // const showWidget = () => {
-  //   widget.open();
-  // };
+
   return (
     <PageWrapper>
       <main>
@@ -202,8 +180,6 @@ const EditProduct = (props) => {
                     <option
                       key={c._id}
                       value={c._id}
-                      // className="list-group-item d-flex justify-content-between align-items-center"
-                      // id={c._id}
                     >
                       {c.name}
                     </option>

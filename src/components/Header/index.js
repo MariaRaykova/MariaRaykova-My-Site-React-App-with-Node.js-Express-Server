@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./index.scss";
-// import ButtonDark from '../ButtonDark'
-// import ButtonLight from '../ButtonLight'
+
 import { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import CartContext from "../../contexts/CartContext";
-
+import { useDispatch, useSelector } from "react-redux";
 const Header = () => {
   const context = useContext(AuthContext);
-  const cartContext = useContext(CartContext);
   const [quantity, setQuantity] = useState(0);
-
+  const cartProducts = useSelector((state) => state.cartReducer.cartProducts);
   useEffect(() => {
-    setQuantity(cartContext.products?.length);
-  }, [cartContext.quantity]);
+    setQuantity(cartProducts?.length)
+  }, [cartProducts]);
   const profilePage = () => {
     if (context.isLogged && context.user.role === "admin") {
       return (
@@ -100,7 +98,7 @@ const Header = () => {
           <NavLink to="/cart">
             <i className="fa fa-shopping-cart">
               <sub>
-                <small>{cartContext.products.length}</small>
+                <small>{cartProducts?.length}</small>
               </sub>
             </i>
           </NavLink>

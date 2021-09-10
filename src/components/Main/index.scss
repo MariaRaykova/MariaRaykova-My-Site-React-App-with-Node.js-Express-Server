@@ -4,8 +4,8 @@
     display:flex;
     flex-direction: column;
     min-width: 250px;
-
-
+padding: 10px;
+margin: 10px;
 }
 .card header:nth-child(2){ /*2 в скобите незнайно защо го направи на заглавието*/
     flex-grow:1; /*втория чайлд в картичката - съдържанието да се разпъне до колкото може и да избура footer-a*/

@@ -3,7 +3,6 @@ import { useHistory, Link } from "react-router-dom";
 import "./index.scss";
 import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper";
-// import ButtonLight from "../ButtonLight";
 import { logInHandler } from "../../../utils/submitHandler";
 
 const LoginPage = () => {

@@ -64,14 +64,11 @@ export const createImage = (body) => {
     });
 };
 export const uploadImage = (image) => {
-  //задължително с new FormData
+
   const data = new FormData();
 
   data.append("file", image);
-  data.append("upload_preset", "react_ecommerce"); //името, което написахме на новата директория
-  //data.append("cloud_name", "dszjcx6ai"); //моя cloud name от Dashboard - става и без това
-
-  //от Dashboard -> More -> API Base URL стрелката надолу image upload...
+  data.append("upload_preset", "react_ecommerce");
   return fetch("https://api.cloudinary.com/v1_1/dszjcx6ai/image/upload", {
     method: "POST",
     body: data

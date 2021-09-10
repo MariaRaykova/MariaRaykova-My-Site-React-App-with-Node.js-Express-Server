@@ -36,7 +36,6 @@ export const prodReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_PRODUCTS_REQUEST:
       return {
-        //без ...state ще занули всички отстанали неща от initial state-а при следващия fetch, success или fail
         ...state,
         loading: true,
         error: null
@@ -155,52 +154,9 @@ export const prodReducer = (state = initialState, action) => {
             error: action.payload.error
           };
       
-            // case ADD_IMAGE_TO_LIST: 
-            // console.log("ot reducer state.imageList " +state.imageList )
-            // // console.log("ot reducer new image ot action -a " + newImage )
-            // return {
-            //   ...state, 
-            //   imageList: [...state.imageList, action.newImage]
-            // }
-                      
-          // ...state, imageList: state.imageList.push([action.newImage]) , tova za obekt ..  imageList: [...state.imageList, action.newImage] 
+  
                   
-    //   case SEARCH:
-    //     return {
-    //       ...state,
-    //       loading: true,
-    //       error: null
-    //     }
-    //   case SEARCH_SUCCESS:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       products: action.payload.data.products
-    //     }
-    //   case SEARCH_FAIL:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       error: action.payload.error.response.data
-    //     }
-    //   case APPLY_FILTERS:
-    //     return {
-    //       ...state,
-    //       loading: true,
-    //       error: null
-    //     }
-    //   case APPLY_FILTERS_SUCCESS:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       products: action.payload.data.products
-    //     }
-    //   case APPLY_FILTERS_FAIL:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       error: action.payload.error.response.data
-    //     }
+   
     default:
       return state;
   }

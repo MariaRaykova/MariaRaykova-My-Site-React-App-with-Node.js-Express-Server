@@ -13,10 +13,7 @@ const Orders = () => {
   }, []);
 
   return (
-    // <PageWrapper>
-    // {/* // title="Orders" // description=
-    // {`G'day ${context.user.name}, you can manage all the orders here`}
-    // // className="container-fluid" */}
+    // <PageWrapper> */}
     <div className="row">
       <div className="col-md-8 offset-md-2">
         {orders?.map((o) => {
