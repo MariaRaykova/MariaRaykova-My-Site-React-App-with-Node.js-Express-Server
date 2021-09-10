@@ -3,7 +3,6 @@ const models = require("../models");
 module.exports = {
   get: (req, res, next) => {
     models.Product.find()
-      // .populate('imageList')
       .populate('category')
       .sort("-created_at")
       .then((products) => {
@@ -14,7 +13,6 @@ module.exports = {
   getOne: (req, res, next) => {
     const id = req.params.id;
     models.Product.find({ _id: id })
-      // .populate('imageList')
       .populate('category')
       .then((product) => {
         return res.send(product);
@@ -30,21 +28,7 @@ module.exports = {
       .catch(next);
   },
 
-  //   exports.listRelated = (req, res) => {
-  //     let limit = req.query.limit ? parseInt(req.query.limit) : 6;
-
-  //     Product.find({ _id: { $ne: req.product }, category: req.product.category })
-  //         .limit(limit)
-  //         .populate('category', '_id name')
-  //         .exec((err, products) => {
-  //             if (err) {
-  //                 return res.status(400).json({
-  //                     error: 'Products not found'
-  //                 });
-  //             }
-  //             res.json(products);
-  //         });
-  // };
+ 
   post: (req, res, next) => {
     const { name, description, imageUrl, selectedCategoryId, price, quantity } = req.body;
     models.Product.create({ name, description, images: imageUrl, price, quantity, category: selectedCategoryId })

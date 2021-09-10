@@ -25,7 +25,6 @@ module.exports = {
       .then((createdOrder) => {
         res.send(createdOrder);
         if (userId !== "") {
-          //ако има userid тогава добавамe order-а към списъка му с поръчки, иначе е нерегистриран потрбител
           models.User.updateOne(
             { _id: userId },
             { $push: { orders: createdOrder } }

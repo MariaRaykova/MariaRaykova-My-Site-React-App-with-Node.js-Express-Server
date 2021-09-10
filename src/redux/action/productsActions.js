@@ -1,4 +1,3 @@
-import { API } from "../../config";
 import {
   getProduct,
   getProducts,
@@ -8,9 +7,6 @@ import {
 } from "../../utils/getProductService";
 import { uploadImage, createImage} from "../../components/Admin/adminHandlers"
 
-
-//add to cart 
-//
 export const getAllProducts = () => (dispatch) => {
   dispatch({
     type: GET_ALL_PRODUCTS_REQUEST
@@ -139,68 +135,6 @@ export const clearUrl= () => (dispatch) => {
     payload: null
   });
 };
-// export const addImageToList = (url) => (dispatch) => {
-//   console.log("ot action url-a " + url)
-//   dispatch({
-//     type: ADD_IMAGE_TO_LIST, 
-//     newImage: url
-//   });
-// };
-// export const search=(text)=>dispatch=>{
-//   dispatch({
-//     type:SEARCH,
-//   })
-//   return serverCall({
-//     method:'GET',
-//     url:`/search?query=${text}`
-//   })
-//   .then(res=>{
-//     dispatch({
-//       type: SEARCH_SUCCESS,
-//       payload: res
-//     })
-//     return res
-//   })
-//   .catch(error=>{
-//     dispatch({
-//       type: SEARCH_FAIL,
-//       payload: {error}
-//     })
-//     return error
-//   })
-// }
-
-// export const applyFilters=(filter_string)=>dispatch=>{
-//   dispatch({
-//     type:APPLY_FILTERS,
-//   })
-//   return serverCall({
-//     method:'GET',
-//     url:`/products?${filter_string}`
-//   })
-//   .then(res=>{
-//     dispatch({
-//       type: APPLY_FILTERS_SUCCESS,
-//       payload: res
-//     })
-//     return res
-//   })
-//   .catch(error=>{
-//     dispatch({
-//       type: APPLY_FILTERS_FAIL,
-//       payload: {error}
-//     })
-//     return error
-//   })
-// }
-
-// export const APPLY_FILTERS_REQUEST = "APPLY_FILTERS";
-// export const APPLY_FILTERS_SUCCESS = "APPLY_FILTERS_SUCCESS";
-// export const APPLY_FILTERS_FAIL = "APPLY_FILTERS_FAIL";
-
-// export const SEARCH_REQUEST = "SEARCH";
-// export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
-// export const SEARCH_FAIL = "SEARCH_FAIL";
 
 export const GET_ALL_PRODUCTS_REQUEST = "GET_ALL_PRODUCTS_REQUEST";
 export const GET_ALL_PRODUCTS_SUCCESS = "GET_ALL_PRODUCTS_SUCCESS";

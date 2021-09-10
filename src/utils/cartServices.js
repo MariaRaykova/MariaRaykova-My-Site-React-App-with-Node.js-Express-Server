@@ -7,7 +7,7 @@ export const getCartStorage = () => {
   }
 };
 
-export const addToCartSorage = (body) => {
+export const addToCartStorage = (body) => {
   window.sessionStorage.setItem("cart", JSON.stringify(body));
 };
 export const clearCartStorage = () => {

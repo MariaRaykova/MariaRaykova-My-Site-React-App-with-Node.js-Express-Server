@@ -18,7 +18,7 @@ const AddImage = () => {
     const url = useSelector((state) => state.productsReducer.url);
     const [imageList, setImageList]= useState([])
   
-    // const loading = useSelector((state) => state.productsReducer.loading);
+    const loading = useSelector((state) => state.productsReducer.loading);
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -47,15 +47,15 @@ const AddImage = () => {
             dispatch(addImageAction({ productId, imageList }))
             history.push(`/product/${productId}`)
     }
-    // const showLoading = () => {
-    //     if (loading) {
-    //       return (
-    //         <div className="alert alert-success">
-    //           <h2>Loading...</h2>
-    //         </div>
-    //       );
-    //     }
-    //   };
+    const showLoading = () => {
+        if (loading) {
+          return (
+            <div className="alert alert-success">
+              <h2>Loading...</h2>
+            </div>
+          );
+        }
+      };
        const showImageList = () => {
         if (imageList?.length>0) {
           return (
@@ -81,7 +81,7 @@ const AddImage = () => {
           name="photoFromFile"
           accept="image/*"
         />
-        {/* {showLoading()} */}
+        {showLoading()}
         {/* <div>
           <h1>Uploaded image will be displayed here</h1>
           <img src={products?.image} alt="" />

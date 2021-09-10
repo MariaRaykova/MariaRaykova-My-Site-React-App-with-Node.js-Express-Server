@@ -152,14 +152,14 @@ form textarea:focus {
 	outline: none;
 	border: 2px solid var(--color-pink-default, lightgrey);
 }
-// button pink
+
 .btn-pink {
     background: var(--color-pink-default, lightgray);
     border: none;
     color: white;
 border-radius: 0.3rem;
 padding: 3px 7px;
-margin:5px;
+margin:10px;
 }
 .btn-pink:hover {
     color: var(--color-pink-default, lightgray);

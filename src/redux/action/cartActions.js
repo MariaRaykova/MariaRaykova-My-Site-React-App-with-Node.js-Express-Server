@@ -1,44 +1,55 @@
-export const addToCart = (item) => ({
-  type: ADD_TO_CART,
-  item
-});
+import store from '../store';
 
-export const deleteFromCart = (item) => ({
-  type: DELETE_FROM_CART,
-  item
-});
+// export const ADD_CART_TO_STORAGE = 'ADD_CART_TO_STORAGE';
+export const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS';
+export const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART';
+export const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';
+export const INCREMENT_CART_ITEM_QUANTITY = 'INCREMENT_CART_ITEM_QUANTITY';
+export const DECREMENT_CART_ITEM_QUANTITY = 'DECREMENT_CART_ITEM_QUANTITY';
+export const EMPTY_CART = 'EMPTY_CART';
+import {getCartStorage, addToCartStorage, clearCartStorage} from "../../utils/cartServices"
 
-export const deleteALlFromCart = (item) => ({
-  type: DELETE_ALL_FROM_CART,
-  item
-});
+export const loadCart = () => {
+    return {
+        type: GET_CART_PRODUCTS,
+        payload: getCartStorage() ? getCartStorage() : []
+    }
+}
+export const addToCartAction = product => (dispatch)=> {
+    dispatch(loadCart());
+    dispatch({
+      type: ADD_PRODUCT_TO_CART,
+      payload: product
+    });
+    addToCartStorage(store.getState().cartReducer.cartProducts);
+};
 
-export const ADD_TO_CART = "ADD_TO_CART";
-export const DELETE_FROM_CART = "DELETE_FROM_CART";
-export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
+export const removeProductToCart = productId => (dispatch)=>{
+    dispatch({ 
+        type: REMOVE_PRODUCT_FROM_CART, 
+        payload: productId
+    });
+   addToCartStorage(store.getState().cartReducer.cartProducts);
+};
 
-// const addItemsAction = () => {
-//   //фунцкия, която dispatch-ва add item action
-//   store.dispatch({
-//     type: ADD_ITEM
-//   });
-// };
+export const incrementCartQuantity = productId => dispatch=> {
+    return{
+        type: INCREMENT_CART_ITEM_QUANTITY,
+        payload: productId
+    }
+};
 
-// export const LIST_ERROR = 'LIST_ERROR';
-// export const LIST_IS_LOADING = 'LIST_IS_LOADING'
-// export const LIST_FETCH_SUCCESS = 'LIST_FETCH_SUCCESS'
-// export const ITEM_FETCH_SUCCESS = 'ITEM_FETCH_SUCCESS'
-// export const ITEM_ERROR = 'ITEM_ERROR'
-// export const ITEM_IS_LOADING = 'ITEM_IS_LOADING'
-// export const FILL_FILTER = 'FILL_FILTER'
+export const decrementCartQuantity = productId => dispatch=> {
+  return {
+      type: DECREMENT_CART_ITEM_QUANTITY,
+      payload: productId
+  }
+};
 
-// export const FILTER_ARGS = 'FILTER_ARGS'
-// export const FILTER_CATEGORIES_MULTIPLE_KEYWORDS = 'FILTER_CATEGORIES_MULTIPLE_KEYWORDS'
-// export const FILTER_CATEGORIES_ONE_KEYWORD = 'FILTER_CATEGORIES_ONE_KEYWORD'
-// export const FILTER_SIZE = 'FILTER_SIZE'
-// export const FILTER_PRICE_RANGE = 'FILTER_PRICE_RANGE'
-// export const RESET_KEYWORDS = 'RESET_KEYWORDS'
-
-// export const CATEGORIES_PRODUCTS = 'CATEGORIES_PRODUCTS'
-
-// export const USER_ADDRESS = 'USER_ADDRESS'
+export const emptyCart = () => {
+    clearCartStorage()
+    return {
+        type: EMPTY_CART,
+        payload: []
+    }
+}

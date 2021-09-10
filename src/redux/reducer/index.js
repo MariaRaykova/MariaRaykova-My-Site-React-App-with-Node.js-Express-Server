@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import { prodReducer } from "./productsReducer";
+import { prodReducer} from "./productsReducer";
+import { cartReducer} from "./cartReducer";
 
 const rootReducer = combineReducers({
-  productsReducer: prodReducer //първото е след state-a в useSelector
-  // registration,
-  // users,
+  productsReducer: prodReducer, 
+  cartReducer
   // alert
 });
 

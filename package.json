@@ -13,6 +13,7 @@
     "@fontsource/ruthie": "4.5.1",
     "@react-yuki/ui": "0.0.39",
     "axios": "0.21.1",
+    "bootstrap": "^5.1.1",
     "node-sass": "^6.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -23,6 +24,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
     "redux-thunk": "2.3.0",
+    "shortid": "^2.2.16",
     "swiper": "6.8.4"
   },
   "devDependencies": {

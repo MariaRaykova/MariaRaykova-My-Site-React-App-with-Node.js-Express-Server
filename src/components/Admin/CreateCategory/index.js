@@ -15,41 +15,18 @@ const CreateCategory = () => {
   const [success, setSuccess] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  //това е контролирана форма
-  // const handleChange = (e) => {
-  //   setError("");
-  //   setName(e.target.value);
-  // };
-  //аз ще го направя с неконтролирана
+
   useEffect(() => {
     getCategories().then((res) => setCategories(res));  
   }, []);
 
-  // const destroy = productId => {
-  //   deleteProduct(productId, user._id, token).then(data => {
-  //       if (data.error) {
-  //           console.log(data.error);
-  //       } else {
-  //           loadProducts();
-  //       }
-  //   });
-  // };
   const clickCreateSubmitHandler = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    // setError("");
-    // setSuccess(false);
-    // make request to api to create category
     createCategory({ name }).then((data) => {
-      // if (data.error) {
-      //   setError(data.error);
-      // }
-      // } else {
       setName(data);
       e.target.name.value = "";
       setSuccess(true);
-      // history.push("/admin/create/category")
-      // }
     });
   };
 

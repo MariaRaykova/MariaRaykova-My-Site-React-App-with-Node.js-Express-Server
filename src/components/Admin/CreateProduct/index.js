@@ -5,31 +5,25 @@ import { getAllProducts, getAllCategories, uploadImageAction, clearUrl } from ".
 import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper";
 import { createProduct, uploadImage } from "../adminHandlers";
-// import { getCategories, getProducts } from "../../../utils/getProductService";
+
 import ProductCard from "../../ProductCard";
 
 const CreateProduct = () => {
 
   const history = useHistory();
   const context = useContext(AuthContext);
-  // const [products, setProducts] = useState([]);
-  // const [categories, setCategories] = useState([]);
-  // const [loadingUpload, setLoadingUpload] = useState(false);
-
-  // const [url, setUrl] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  const [image, setImage] = useState(null);
+ 
 const [product, setProduct] = useState()
 
   const products = useSelector((state) => state.productsReducer.products);
   const categories = useSelector((state) => state.productsReducer.categories);
   const loading = useSelector((state) => state.productsReducer.loading);
   const url = useSelector((state) => state.productsReducer.url);
-  //Actions - с useDispatch dispatch-ваме action-ите
+ 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //export const productActions = {getAllProducts,getProduct..може и директно да екпортваме функциите в action-ите
     dispatch(getAllProducts());
     dispatch(getAllCategories());
 
@@ -44,12 +38,7 @@ const [product, setProduct] = useState()
       return (<img alt="11" src={url} width="80" height="80" />)
     }
   }
-  console.log("create url " + url)
-
-  // useEffect(() => {
-  //   getProducts().then((res) => setProducts(res));
-  //   getCategories().then((res) => setCategories(res));
-  // }, []);
+ 
 
   // const handleChangeImage = (e) => {
   //   e.preventDefault();
@@ -87,11 +76,7 @@ const [product, setProduct] = useState()
         <ProductCard {...product} />
       )
     }
-      // const showProductCard = (product)=>{
-      //     return(
-      //       <ProductCard {...product}/>
-      //     )
-      //   }
+
       const showCreateForm = () => (
         <section className="create">
           <form onSubmit={onCreateSubmitHandler}>

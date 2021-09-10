@@ -32,10 +32,3 @@ export const registerHandler = (body) => {
       console.log(err);
     });
 };
-//това ще е тук ако logOut-а го правим с бутон submit и хендлъра в Header Components, аз го направих с Routes сега
-// export const logOutHandler = () => {
-//   // document.cookie =
-//   //   "x-auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-//   window.localStorage.clear();
-//   //може да направим fetch към logout в restapi
-// };

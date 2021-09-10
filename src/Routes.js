@@ -14,8 +14,7 @@ import ShoppingCart from "./components/ShoppingCart";
 import EditProduct from "./components/Admin/EditProduct";
 import AddImage from "./components/Admin/AddImage";
 
-// import CreateCategory from "./components/CreateCategory";
-// import CreateProduct from "./components/CreateProduct";
+
 const Routes = () => {
   const context = useContext(AuthContext);
   return (
