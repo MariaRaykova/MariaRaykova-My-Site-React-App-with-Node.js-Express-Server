@@ -31,16 +31,12 @@ const CartItem = (cartItem) => {
       };
 
     return (
-        <div className="cart-row">
-            
+        <div className="table-row">
                 <img className="img-responsive" src={image} style={{height: '8%', width: '8%'}} alt={product.name}/>
-          
-        
-                <h4 className="cart-product-name"><strong>{product.name}</strong></h4>
-      
+                <h4 className="product-name"><strong>{product.name}</strong></h4>
             <div className="product-quantity-container">
                 <div style={{paddingTop: '5px'}}>
-                    <h6><strong>{product.price}$ <span className="text-muted">x</span></strong></h6>
+                    <h6><strong>{product.price}€ <span className="text-muted">x</span></strong></h6>
                 </div>
                 <div >
                     <div className="quantity">

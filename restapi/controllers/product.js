@@ -27,14 +27,12 @@ module.exports = {
       })
       .catch(next);
   },
-
- 
   post: (req, res, next) => {
     const { name, description, imageUrl, selectedCategoryId, price, quantity } = req.body;
-    models.Product.create({ name, description, images: imageUrl, price, quantity, category: selectedCategoryId })
+      models.Product.create({ name, description , images: imageUrl, price, quantity, category: selectedCategoryId })
       .then((createdProduct) => {
-        res.send(createdProduct);
         models.Category.updateOne({ _id: selectedCategoryId }, { $push: { products: createdProduct } })
+        res.send(createdProduct);
       }).catch(next);
   },
   postImage: (req, res, next) => {
@@ -43,16 +41,22 @@ module.exports = {
     .then((updatedProduct) => res.send(updatedProduct))
     .catch(next)
   },
-
   put: (req, res, next) => {
-    const id = req.params.id;
-    const { name, description, image, quantity, category, price } = req.body;
+    const { name, description, images, quantity, category, price, isNew } = req.body;
+     const id = req.params.id
+     const checkNew = isNew;
     models.Product.updateOne(
       { _id: id },
-      { name, description, images: image, price, quantity, category }
-    )
-      .then((updatedProduct) => res.send(updatedProduct))
-      .catch(next);
+      { name, description, images, quantity,category, price, new: checkNew}
+    ).then((updatedProduct) => {
+      res.send(updatedProduct)
+      if (checkNew){
+        models.Category.updateOne(
+          { _id: "6148af809dbc8e21bc808fca"}, 
+          { $push: { products: id } }
+          )
+      }
+    }).catch(next);
   },
 
   delete: (req, res, next) => {

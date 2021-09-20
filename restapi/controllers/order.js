@@ -3,7 +3,7 @@ const models = require("../models");
 module.exports = {
   get: (req, res, next) => {
     models.Order.find()
-      .populate("items")
+      .populate("product")
       .sort("-created_at")
       .then((orders) => {
         return res.send(orders);
@@ -12,16 +12,15 @@ module.exports = {
   },
   getByUser: (req, res, next) => {
     models.Order.find({ userId: req.params.userId })
-      .populate("items")
+      .populate("product")
       .then((orders) => {
         return res.send(orders);
       })
       .catch(next);
   },
   post: (req, res, next) => {
-    const { email, name, phone, city, address, userId, items } = req.body;
- 
-    models.Order.create({email, name, phone, city, address, userId, items})
+    const { email, name, phone, city, address, userId,  cartProducts, totalAmount } = req.body;
+    models.Order.create({email, name, phone, city, address, userId, items: cartProducts, totalAmount})
       .then((createdOrder) => {
         res.send(createdOrder);
         if (userId !== "") {

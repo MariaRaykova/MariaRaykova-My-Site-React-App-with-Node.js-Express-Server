@@ -43,11 +43,12 @@ const Cart = () => {
     const phone = e.target.phone.value;
     const city = e.target.city.value;
     const address = e.target.address.value;
-
-    createOrder({ email, name, phone, city, address, userId, items }).then(
+    const totalAmount = getTotal()
+   
+    createOrder({ email, name, phone, city, address, userId, cartProducts, totalAmount }).then(
       (res) => {
-        context.clearCart();
-        // clearCartStorage();
+       
+        dispatch(emptyCart())
         setNext(false);
         setSuccess(true);
       }
@@ -73,7 +74,7 @@ const Cart = () => {
 
   const noItemsMessage = () => (
     <h3>
-      Your cart is empty. <br /> <Link to="/">Continue shopping</Link>
+      Your cart is empty. <br /> <Link to="/shop">Continue shopping</Link>
     </h3>
   );
   const showOrderDetails = (items, userId) => {
@@ -154,35 +155,31 @@ const Cart = () => {
 
   return (
     <PageWrapper
-      title="Shopping Cart"
-      // className="container-fluid"
-    >
+      title="Shopping Cart" >
       {success ? (
         showSuccess()
       ) : (
         <div>
-        <div className="card">
+        <div >
           {cartProducts?.length > 0 ? (
-            <div className="card-body">
+            <div>
               {showItems(cartProducts)}
-              <div className="card-footer">
+              <div>
                       <div className="pull-right" style={{margin: '5px', paddingRight: '70px'}}>
                           Total price: <b>{getTotal()}€</b>
                       </div>
               </div>
+              <h3 className="card-header">Finish your order</h3>
+              <button className="btn-pink" onClick={orderDetailsHandler}>Continue</button>
+              <button className="btn-pink" onClick={()=>dispatch(emptyCart())}>Clear Cart</button>
             </div>
           ) : (
             <div className="col-6">{noItemsMessage()}</div>
           )}
         </div>
-        <h5 className="card-header">Finish your order</h5>
-              <button className="btn-pink" onClick={orderDetailsHandler}>Continue</button>
-              <button className="btn-pink" onClick={()=>dispatch(emptyCart())}>Clear Cart</button>
               {showOrderDetails()}
         </div>
       )}
-      
-                  
     </PageWrapper>
   );
 };

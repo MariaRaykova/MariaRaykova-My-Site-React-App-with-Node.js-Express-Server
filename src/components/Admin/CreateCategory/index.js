@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import PageWrapper from "../../PageWrapper";
 import AuthContext from "../../../contexts/AuthContext";
-import { createCategory } from "../adminHandlers";
+import { createCategory } from "../../../utils/adminHandlers";
 import { getCategories } from "../../../utils/getProductService";
 
 const CreateCategory = () => {

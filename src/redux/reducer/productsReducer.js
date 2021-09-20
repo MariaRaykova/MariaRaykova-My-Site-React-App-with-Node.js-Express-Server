@@ -18,7 +18,12 @@ import {
   ADD_IMAGE_REQUEST,
   ADD_IMAGE_SUCCESS,
   ADD_IMAGE_FAIL,
-  ADD_IMAGE_TO_LIST
+  ADD_COVERFLOW_IMAGE_REQUEST,
+  ADD_COVERFLOW_IMAGE_SUCCESS,
+  ADD_COVERFLOW_IMAGE_FAIL,
+  GET_COVERFLOW_IMAGE_REQUEST,
+  GET_COVERFLOW_IMAGE_SUCCESS,
+  GET_COVERFLOW_IMAGE_FAIL,
 } from "../action/productsActions";
 
 const initialState = {
@@ -30,7 +35,8 @@ const initialState = {
   mainImage: null,
   loading: false,
   error: null,
-  imageList: []
+  imageList: [], 
+  coverflowImages: [],
 };
 export const prodReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -135,6 +141,7 @@ export const prodReducer = (state = initialState, action) => {
             ...state,
             url: action.payload
           };
+         
         case ADD_IMAGE_REQUEST:
           return {
             ...state,
@@ -153,10 +160,43 @@ export const prodReducer = (state = initialState, action) => {
             loading: false,
             error: action.payload.error
           };
-      
-  
-                  
-   
+          case ADD_COVERFLOW_IMAGE_REQUEST:
+            return {
+              ...state,
+              loading: true,
+              error: null
+            };
+          case ADD_COVERFLOW_IMAGE_SUCCESS:
+            return {
+              ...state,
+              loading: false,
+              url: action.payload.url
+            };
+          case ADD_COVERFLOW_IMAGE_FAIL:
+            return {
+              ...state,
+              loading: false,
+              error: action.payload.error
+            };
+            case GET_COVERFLOW_IMAGE_REQUEST:
+              return {
+                ...state,
+                loading: true,
+                error: null
+              };
+            case GET_COVERFLOW_IMAGE_SUCCESS:
+        
+              return {
+                ...state,
+                loading: false,
+                coverflowImages: action.payload
+              };
+            case GET_COVERFLOW_IMAGE_FAIL:
+              return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+              };
     default:
       return state;
   }

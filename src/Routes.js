@@ -1,27 +1,28 @@
 import { useContext } from "react";
 import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
-import Main from "./components/Main";
+import Home from "./components/HomePage";
 import LoginPage from "./components/User/LoginPage";
 import RegisterPage from "./components/User/RegisterPage";
 import UserProfilePage from "./components/User/UserProfilePage";
 import ProductPage from "./components/ProductPage";
-import AdminProfilePage from "./components/Admin/AdminProfilePage";
+import AdminPage from "./components/Admin/AdminPage";
 import CreateCategory from "./components/Admin/CreateCategory";
 import CreateProduct from "./components/Admin/CreateProduct";
-// import isAuth from "./hoc/isAuth";
 import AuthContext from "./contexts/AuthContext";
 import ShoppingCart from "./components/ShoppingCart";
 import EditProduct from "./components/Admin/EditProduct";
 import AddImage from "./components/Admin/AddImage";
-
+import ManageCoverflow from "./components/Admin/ManageCoverflow";
+import Shop from "./components/ShopPage";
 
 const Routes = () => {
   const context = useContext(AuthContext);
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Main} />
-        <Route path="/product/category/:category" exact component={Main} />
+        <Route path="/" exact component={Home} />
+        <Route path="/shop" exact component={Shop} />
+        <Route path="/product/category/:category" exact component={Shop} />
         <Route path="/product/:id" exact component={ProductPage} />
         <Route path="/cart" exact component={ShoppingCart} />
         {/* <Route path="/orders" exact component={Orders} /> */}
@@ -48,7 +49,7 @@ const Routes = () => {
         {/* Admin  */}
         <Route path="/admin/profile">
           {context.isLogged && context.user.role === "admin" ? (
-            <AdminProfilePage />
+            <AdminPage />
           ) : (
             <Redirect to="/" />
           )}
@@ -77,6 +78,13 @@ const Routes = () => {
         <Route path="/admin/image/add/product/:id">
           {context.isLogged && context.user.role === "admin" ? (
             <AddImage />
+          ) : (
+            <Redirect to="/" />
+          )}
+        </Route>
+        <Route path="/admin/coverflow">
+          {context.isLogged && context.user.role === "admin" ? (
+            <ManageCoverflow />
           ) : (
             <Redirect to="/" />
           )}

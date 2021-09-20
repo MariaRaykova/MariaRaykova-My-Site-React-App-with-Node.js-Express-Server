@@ -3,7 +3,8 @@ import { useHistory, Link, useRouteMatch } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper";
 import ProductCard from "../../ProductCard";
-import { editProduct, uploadImage } from "../adminHandlers";
+import { editProduct, uploadImage} from "../../../utils/adminHandlers";
+import { getProduct } from "../../../utils/getProductService";
 import {
   getCategories,
   getProductService
@@ -37,7 +38,7 @@ const EditProduct = (props) => {
     setLoading(true);
     uploadImage(e.target.files[0]).then((data) => {
       // if (data.error) {
-      //   setError({ ...product, error: data.error });
+      //   setError(s{ ...product, error: data.error });
       // } else {
       setNewProductArray({ ...newProductArray, image: data.secure_url });
       setLoading(false);
@@ -62,9 +63,17 @@ const EditProduct = (props) => {
     });
   };
   //картичката със старите данни на продукта
+
+  const handleCheckNewItem = (e) =>{
+    const checked = e.target.checked
+ 
+    if (checked){
+      setNewProductArray({ ...newProductArray, isNew: true });
+    }
+  }
   const showProductCard = () => {
     if (product !== []) {
-      return <ProductCard {...product} />;
+      // return <ProductCard {...product} />;
     }
   };
   const showLoading = () => {
@@ -132,6 +141,13 @@ const EditProduct = (props) => {
                   <span className="actions"></span>
                 </span>
               </p>
+              <p className="field">
+                <label htmlFor="check">New</label>
+                <span className="check">
+                <input  type="checkbox" onClick={handleCheckNewItem} />
+                  <span className="actions"></span>
+                </span>
+              </p>
               <label className="btn btn-secondary">
                 <input
                   onChange={handleChangeImage}
@@ -140,7 +156,7 @@ const EditProduct = (props) => {
                   accept="image/*"
                 />
                 <div>
-                  <h1>Uploaded image will be displayed here</h1>
+                  <h5>Uploaded image will be displayed here</h5>
                   <img src={newProductArray?.image} alt="" />
                 </div>
               </label>

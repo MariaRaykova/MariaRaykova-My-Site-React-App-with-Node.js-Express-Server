@@ -3,18 +3,18 @@ const models = require("../models");
 module.exports = {
   get: (req, res, next) => {
     models.Category.find()
-    .populate('product')
+    .populate('products')
       .then((categories) => {
         return res.send(categories);
       })
       .catch(next);
   },
   getByName: (req, res, next) => {
-    console.log("da vidq kakwo ima w category ot api name " +req.params.name)
+
     models.Category.findOne({name: req.params.name})
     .populate('product')
       .then((category) => {
-        console.log("da vidq kakwo ima w category ot api " +category)
+
         return res.send(category.products);
       })
       .catch(next);
