@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import {Link} from "react-router-dom"
 import {} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, EffectCoverflow } from "swiper";
-import { getProducts } from "../../../utils/getProductService";
-// import "./index.scss";
+
+import "./index.scss"
+import { uploadImageAction, addCoverflowImageAction, getCoverflowImageAction } from "../../../redux/action/productsActions";
+import { useDispatch, useSelector } from "react-redux";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
@@ -14,17 +17,31 @@ import "swiper/components/effect-coverflow/effect-coverflow.scss";
 SwiperCore.use([Navigation, Pagination, EffectCoverflow]);
 
 export default function SwiperCoverflow() {
-  const [productsMain, setProductsMain] = useState([]);
-  useEffect(() => {
-    getProducts().then((res) => {
-      setProductsMain(res);
-    });
-  }, []);
+  const loading = useSelector((state) => state.productsReducer.loading);
+  const coverflowImages = useSelector((state) => state.productsReducer.coverflowImages);
+  const dispatch = useDispatch();
 
-  return (
-    <div className="my-container">
-      <Swiper
-        pagination
+  useEffect(() => {
+    dispatch(getCoverflowImageAction())
+  },[])
+ 
+
+  const showLoading = () => {
+    if (loading) {
+      return (
+        <div className="alert alert-success">
+          <h2>Loading...</h2>
+        </div>
+      );
+    }
+  };
+  const showImages= () => {
+    if (coverflowImages?.length>0) {
+      return(
+        <Swiper
+        pagination={{
+          "dynamicBullets": true
+        }}
         effect="coverflow"
         coverflowEffect={{
           rotate: 50,
@@ -36,24 +53,29 @@ export default function SwiperCoverflow() {
         slidesPerView={2}
         centeredSlides
         loop
-        style={{ height: "500px", width: "1200px" }}
+        style={{ height: "400px", width: "1200px" }}
         //на целия контейнер
       >
-        {productsMain?.map((p) => (
-          <SwiperSlide
-            key={p._id}
-            style={{
-              backgroundImage: `url(${p.image}/600/300)`,
-              backgroundSize: "cover"
-            }}
-          >
-            {" "}
-          </SwiperSlide>
+       {coverflowImages.map((p) => (
+         <SwiperSlide key={p._id} >
+           <Link to="/shop"></Link>
+            <div className="vl"></div>
+            <div className="hl"></div>    
+                  <img src={p.url} width="360px" height="360px"/>
+                  {/* <button className="semi-transparent-button">SHOP HERE</button> */}
+                  <Link className="semi-transparent-button" to="/shop"><span className="btn-text">SHOP HERE</span></Link>
+          <h1 className="title">{p.type}</h1>
+            {/* {" "} */}
+        </SwiperSlide>
         ))}
-        {/* <SwiperSlide key={p._id}>
-            <img src={`${p.image}/800/300`} alt="swipe" />
-          </SwiperSlide> */}
       </Swiper>
+      )
+     
+    }
+  }
+  return (
+    <div className="my-container">
+      {loading ? showLoading() : showImages()}
     </div>
   );
 }

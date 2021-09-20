@@ -1,0 +1,24 @@
+.new-collection  {
+    .mySwiper .swiper-slide {
+        width: 25%;
+        height: 100%;
+        opacity: 1;
+    } 
+    .product-inner{
+        height: 100%;
+    }
+     .product-image {
+         height: 60%;
+     }
+     .product-info {
+        height: 40%;
+        .product-name {
+            height: 60%;
+        }
+        .product-bar{
+            height: 40%;
+        }
+    }
+
+  }
+  

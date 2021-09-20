@@ -5,10 +5,10 @@ const { String, ObjectId } = Schema.Types;
 
 const imageListSchema = new Schema(
   {
-    url: [{
+    url: {
       type: String,
       required: true,
-    }],
+    },
     type: {
       type: String,
       required: true,

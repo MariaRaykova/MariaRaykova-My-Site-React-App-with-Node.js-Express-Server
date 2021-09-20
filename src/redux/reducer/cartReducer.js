@@ -15,7 +15,7 @@ const initialState = {
     product: {},
     count: 0
   }],
-
+  totalProducts: 0
 };
 export const cartReducer = (state = initialState, action) => {
   let newCart;
@@ -31,18 +31,18 @@ export const cartReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        cartProducts: action.payload
+        cartProducts: action.payload,
       };
     case ADD_PRODUCT_TO_CART:
-  
       newCart = [...state.cartProducts];
       productIndex = newCart.findIndex(item => item.product._id === action.payload._id);
-    
       if (productIndex < 0) {
         newCart.push({ product: {...action.payload}, count: 1 });
+        state.totalProducts++;
       } else {
         const updatedObj = { ...newCart[productIndex] };
         updatedObj.count++;
+        state.totalProducts++;
         newCart[productIndex] = updatedObj;
       }
       return {
@@ -62,6 +62,7 @@ export const cartReducer = (state = initialState, action) => {
             ? { ...i, count: i.count + 1 }
             : i,
         ),
+        totalProducts:state.totalProducts+1
       };
     case DECREMENT_CART_ITEM_QUANTITY:
       return {
@@ -74,11 +75,13 @@ export const cartReducer = (state = initialState, action) => {
             }
             : i,
         ),
+        totalProducts:state.totalProducts-1
       };
     case EMPTY_CART:
       return {
         ...state,
-        cartProducts: action.payload
+        cartProducts: action.payload,
+        totalProducts: 0
       };
     default:
       return state;

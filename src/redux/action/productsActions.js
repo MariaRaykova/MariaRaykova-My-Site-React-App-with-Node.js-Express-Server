@@ -3,9 +3,8 @@ import {
   getProducts,
   getCategories,
   getProductsByCategory,
-  getImagesByProduct
 } from "../../utils/getProductService";
-import { uploadImage, createImage} from "../../components/Admin/adminHandlers"
+import { uploadImage, createImage, addCoverflowImage,  getCoverflowImage} from "../../utils/adminHandlers"
 
 export const getAllProducts = () => (dispatch) => {
   dispatch({
@@ -135,7 +134,45 @@ export const clearUrl= () => (dispatch) => {
     payload: null
   });
 };
-
+export const addCoverflowImageAction = (body) => (dispatch)=>{
+  dispatch({
+    type: ADD_COVERFLOW_IMAGE_REQUEST
+  });
+  addCoverflowImage(body)
+  .then((res) => {
+      dispatch({
+        type: ADD_COVERFLOW_IMAGE_SUCCESS,
+        payload:res
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: ADD_COVERFLOW_IMAGE_FAIL,
+        payload: { err }
+      });
+      return err;
+    });
+}
+export const getCoverflowImageAction = () => (dispatch)=>{
+  dispatch({
+    type: GET_COVERFLOW_IMAGE_REQUEST
+  });
+  getCoverflowImage()
+  .then((res) => {
+   
+      dispatch({
+        type: GET_COVERFLOW_IMAGE_SUCCESS,
+        payload:res
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: GET_COVERFLOW_IMAGE_FAIL,
+        payload: { err }
+      });
+      return err;
+    });
+}
 export const GET_ALL_PRODUCTS_REQUEST = "GET_ALL_PRODUCTS_REQUEST";
 export const GET_ALL_PRODUCTS_SUCCESS = "GET_ALL_PRODUCTS_SUCCESS";
 export const GET_ALL_PRODUCTS_FAIL = "GET_ALL_PRODUCTS_FAIL";
@@ -163,4 +200,11 @@ export const UPLOAD_IMAGE_CLEAR = "UPLOAD_IMAGE_CLEAR";
 export const ADD_IMAGE_REQUEST = "ADD_IMAGE_REQUEST";
 export const ADD_IMAGE_SUCCESS = "ADD_IMAGE_SUCCESS";
 export const ADD_IMAGE_FAIL = "ADD_IMAGE_FAIL";
-export const ADD_IMAGE_TO_LIST = "ADD_IMAGE_TO_LIST";
+
+export const ADD_COVERFLOW_IMAGE_REQUEST = "ADD_COVERFLOW_IMAGE_REQUEST";
+export const ADD_COVERFLOW_IMAGE_SUCCESS = "ADD_COVERFLOW_IMAGE_SUCCESS";
+export const ADD_COVERFLOW_IMAGE_FAIL = "ADD_COVERFLOW_IMAGE_FAIL";
+
+export const GET_COVERFLOW_IMAGE_REQUEST = "GET_COVERFLOW_IMAGE_REQUEST";
+export const GET_COVERFLOW_IMAGE_SUCCESS = "GET_COVERFLOW_IMAGE_SUCCESS";
+export const GET_COVERFLOW_IMAGE_FAIL = "GET_COVERFLOW_IMAGE_FAIL";

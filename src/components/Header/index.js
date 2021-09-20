@@ -10,6 +10,8 @@ const Header = () => {
   const context = useContext(AuthContext);
   const [quantity, setQuantity] = useState(0);
   const cartProducts = useSelector((state) => state.cartReducer.cartProducts);
+  const totalProducts = useSelector((state) => state.cartReducer.totalProducts);
+ 
   useEffect(() => {
     setQuantity(cartProducts?.length)
   }, [cartProducts]);
@@ -38,7 +40,7 @@ const Header = () => {
   };
   return (
     <header className="site-header">
-      <div className="content-limiter">
+  
         <div id="menuToggle">
           <input type="checkbox" />
           <span></span>
@@ -51,8 +53,8 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink activeClassName="nav-link-selected" to="/catalog">
-                Catalog
+              <NavLink activeClassName="nav-link-selected" to="/shop">
+                Shop
               </NavLink>
             </li>
             <li>
@@ -79,8 +81,8 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink activeClassName="nav-link-selected" to="/catalog">
-                Catalog
+              <NavLink activeClassName="nav-link-selected" to="/shop">
+                Shop
               </NavLink>
             </li>
             <li>
@@ -98,7 +100,8 @@ const Header = () => {
           <NavLink to="/cart">
             <i className="fa fa-shopping-cart">
               <sub>
-                <small>{cartProducts?.length}</small>
+                {/* <small>{cartProducts.count ? cartProducts.count : 0}</small> */}
+                <small>{totalProducts}</small>
               </sub>
             </i>
           </NavLink>
@@ -129,7 +132,7 @@ const Header = () => {
             </ul>
           )}
         </div>
-      </div>
+    
     </header>
   );
 };

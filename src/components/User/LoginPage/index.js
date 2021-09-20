@@ -22,7 +22,7 @@ const LoginPage = () => {
 
   return (
     <PageWrapper>
-      <main>
+
         <section className="login">
           <form onSubmit={onLoginSubmitHandler}>
             <fieldset>
@@ -76,7 +76,7 @@ const LoginPage = () => {
             </fieldset>
           </form>
         </section>
-      </main>
+    
     </PageWrapper>
   );
 };

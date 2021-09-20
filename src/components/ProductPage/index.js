@@ -1,4 +1,3 @@
-import "./index.scss";
 import React, { useState, useEffect } from "react";
 import { getImagesByProductAction, getSingleProduct } from "../../redux/action/productsActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,7 +57,7 @@ const ProductPage = () => {
     // }, [props.match.params]);
     return (
       <PageWrapper>
-        <main>
+      
           {showLoading()}
           <div className="body">
           <div className="image-big">
@@ -71,7 +70,7 @@ const ProductPage = () => {
           {/* {product?.images?.map((i) => (
             <img key={i} src={i} width="150" height="150" />
           ))} */}
-        </main>
+      
       </PageWrapper>
     );
   };

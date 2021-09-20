@@ -8,31 +8,11 @@ module.exports = {
       })
       .catch(next);
   },
-  getByProduct: (req, res, next) => {
-    const id = req.params.id;
-    models.ImageList.find({ _id: id })
-      .then((image) => {
-        return res.send(image);
-      })
-      .catch(next);
-  },
   post: (req, res, next) => {
-    const { url, type, productId } = req.body;
-      models.ImageList.find({ productId: productId }).then((res) => {
-        if (res.length) {
-          models.ImageList.findOneAndUpdate({ productId: productId },{$push: {url: url}},{
-            new: true
-          } )
-        }
-        else {
-          models.ImageList.create({ url, type, productId }).then((createdImage) => {
+    const { url, type} = req.body;
+          models.ImageList.create({ url, type }).then((createdImage) => {
             res.send(createdImage);
           }).catch(next);
-        }
-      })
-        .catch(err => {
-          console.log("error" + err)
-        });
   },
   put: (req, res, next) => {
     const id = req.params.id;

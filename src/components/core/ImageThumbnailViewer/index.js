@@ -9,7 +9,7 @@ SwiperCore.use([Navigation, Thumbs]); // install Swiper modules
 
 export default function ImageThumbnailViewer({ images }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    console.log(images)
+
     return (
         <div className="swiper-container">
             <Swiper

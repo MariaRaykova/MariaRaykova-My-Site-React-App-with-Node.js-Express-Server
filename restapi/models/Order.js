@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Model = mongoose.model;
-const { String, ObjectId } = Schema.Types;
+const { String, Object, Number} = Schema.Types;
 
 const orderSchema = new Schema(
   {
@@ -28,12 +28,20 @@ const orderSchema = new Schema(
     userId: {
       type: String
     },
+    totalAmount: {
+      type: Number
+    },
     items: [
       {
-        type: ObjectId,
-        ref: "Product"
-      }
-    ]
+        product: {
+          type: Object
+        }, 
+        count: {
+          required: true,
+          type: Number
+        },
+      },
+    ],
   },
   {
     timestamps: {

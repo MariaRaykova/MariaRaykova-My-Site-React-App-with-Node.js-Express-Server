@@ -1,17 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../ProductCard";
-import "./index.scss";
 import PageWrapper from "../PageWrapper";
 import AuthContext from "../../contexts/AuthContext";
-import SwiperCoverflow from "../core/SwiperCoverflow";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, getAllProducts, getAllProductsByCategory } from "../../redux/action/productsActions";
 
-const Main = (props) => {
+const Shop = (props) => {
   const context = useContext(AuthContext);
-
-
   const products = useSelector((state) => state.productsReducer.products);
   const categories = useSelector((state) => state.productsReducer.categories);
   const loading = useSelector((state) => state.productsReducer.loading);
@@ -43,8 +39,6 @@ const Main = (props) => {
   
   return (
     <PageWrapper>
-      <main>
-        {/* <SwiperCoverflow /> */}
           {categoryFilter()}
         <div className="card-container">
           <article className="layout-flex">
@@ -54,8 +48,7 @@ const Main = (props) => {
             ))}
           </article>
         </div>
-      </main>
     </PageWrapper>
   );
 };
-export default Main;
+export default Shop;

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = mongoose.model;
-const { String, Number,  ObjectId } = Schema.Types;
+const { String, Number,  ObjectId, Boolean } = Schema.Types;
 
 const productSchema = new Schema({
     name: {
@@ -28,9 +28,8 @@ const productSchema = new Schema({
         type: ObjectId,
         ref: "Category"
     }],
-    author: {
-        type: ObjectId,
-        ref: "User"
+    new: {
+        type: Boolean,
     }
 }, {
     timestamps: {

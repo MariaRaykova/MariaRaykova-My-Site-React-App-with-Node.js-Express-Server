@@ -1,16 +1,44 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../../contexts/AuthContext";
 import PageWrapper from "../../PageWrapper";
 import Orders from "../Orders";
+import "./index.scss"
+import { uploadImageAction,  addCoverflowImageAction } from "../../../redux/action/productsActions";
+import { useDispatch, useSelector } from "react-redux";
 
-const AdminProfilePage = () => {
+const AdminPage = () => {
+  const history = useHistory();
   const context = useContext(AuthContext);
+  const url = useSelector((state) => state.productsReducer.url);
 
+
+  const loading = useSelector((state) => state.productsReducer.loading);
+  const dispatch = useDispatch();
+
+  const handleChangeImage = (e) => {
+    e.preventDefault();
+    dispatch(uploadImageAction(e.target.files[0]))
+ 
+  };
+  const onAddImage = (e) => {
+    e.preventDefault();
+    const type = e.target.type.value
+    dispatch(addCoverflowImageAction({ type, url }))
+    history.push(`/admin/profile`)
+}
+const showLoading = () => {
+if (loading) {
+  return (
+    <div className="alert alert-success">
+      <h2>Loading...</h2>
+    </div>
+  );
+}
+};
   return (
     <PageWrapper>
-      <main>
-        <div className="row">
+        <div className="orders">
           <div className="card">
             <h4 className="card-header">Admin Links</h4>
             <ul className="list-group">
@@ -34,22 +62,17 @@ const AdminProfilePage = () => {
                   Manage Products
                 </Link>
               </li>
-            </ul>
-          </div>
-          <div className="card mb-5">
-            <h3 className="card-header">Admin Information</h3>
-            <ul className="list-group">
-              <li className="list-group-product">{context.user.name}</li>
-              <li className="list-group-product">{context.user.email}</li>
               <li className="list-group-product">
-                {context.user.role === "admin" ? "Admin" : "Registered User"}
+                <Link className="nav-link" to="/admin/coverflow">
+                  Manage Coverflow
+                </Link>
               </li>
             </ul>
           </div>
           <Orders />
         </div>
-      </main>
+
     </PageWrapper>
   );
 };
-export default AdminProfilePage;
+export default AdminPage;

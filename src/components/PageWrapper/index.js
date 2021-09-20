@@ -9,14 +9,9 @@ function PageWrapper({
   children
 }) {
   return (
-    <div>
+    <div className="page-container">
       <Header />
-      <div className="content-container content-limiter">
-        <div className={className}>{children}</div>
-        {/* има значение къде са props.children */}
-        {/* {children} */}
-        <Aside />
-      </div>
+        <main >{children}</main>
       <Footer />
     </div>
   );
