@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { getImagesByProductAction, getSingleProduct } from "../../redux/action/productsActions";
+import { decrementCartQuantity, incrementCartQuantity,  addToCartAction } from "../../redux/action/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 import PageWrapper from "../PageWrapper";
 import ImageThumbnailViewer from "../core/ImageThumbnailViewer";
+import "./index.scss"
+
 
 const ProductPage = () => {
   const match = useRouteMatch();
-  const id = match.params.id; //или  const { id } = useParams();
-  //Reducers - с useSelector вземаме стейта - не import-ваме нищо - state.productsReducer:
-  //state от reducers - products(state = initialState ...,
-  //productsReducer от rootReducer - const rootReducer = combineReducers({ productsReducer: prodReducer, ...
-  //{product} от InitialState-a, аз го взех като state.productsReducer.product
+  const id = match.params.id;
   const product = useSelector((state) => state.productsReducer.product);
   const loading = useSelector((state) => state.productsReducer.loading);
   const images = useSelector((state) => state.productsReducer.images);
   const mainImage = useSelector((state) => state.productsReducer.mainImage);
-  // const [mainImage, setMainImage] = useState(null)
-  //Actions - с useDispatch dispatch-ваме action-ите
+
+  const [orderQuantity, setOrderQuantity] = useState(1)
   const dispatch = useDispatch();
 
+
   useEffect(() => {
-    //export const productActions = {getAllProducts,getProduct..може и директно да екпортваме функциите в action-ите
     dispatch(getSingleProduct(id));
-    // if(product?.images.length>0){
-    //   setMainImage(product?.images[0])
-    // }
   }, []);
+  const onAddHandler = () => {
+    dispatch(addToCartAction(product))
+  };
   const showLoading = () => {
     if (loading) {
       return (
@@ -37,42 +36,68 @@ const ProductPage = () => {
     }
   }
 
-    // const isActive = {
-    //   fontWeight: "bold",
-    //   backgroundColor: "rgba(255, 255, 255, 0.1)",
-    // };
+  const handleIncrement = (e) => {
+    if (orderQuantity > 0 && orderQuantity <= product.quantity) {
+      setOrderQuantity(orderQuantity + 1);
+      dispatch(incrementCartQuantity(product._id));
+    }
+  };
+  const handleDecrement = (e) => {
+    if (orderQuantity > 1) {
+      setOrderQuantity(orderQuantity - 1);
+      dispatch(decrementCartQuantity(product._id));
+    }
+  };
 
-    //const context = useContext(AuthContext);
-    // useEffect(() => {
-    //   getCategories().then((res) => setCategories(res));
 
-    //   if (props.match.params.category) {
-    //     console.log(props.match.params.category);
-    //     getProductsByCategory(props.match.params.category).then((res) =>
-    //       setProducts(res)
-    //     );
-    //   } else {
-    //     getProducts().then((res) => setProducts(res));
-    //   }
-    // }, [props.match.params]);
-    return (
-      <PageWrapper>
-      
-          {showLoading()}
-          <div className="body">
-          <div className="image-big">
-            <div>{product?.name}</div>
-            <div>{product?._id}</div>
-            {/* <img alt="11" src={mainImage}  width="360" height="auto"/> */}
-          </div>
-        </div>
+  return (
+    <PageWrapper>
+      {showLoading()}
+      <div className="product-section">
+        <div className="images-wrapper">
           <ImageThumbnailViewer {...product} />
           {/* {product?.images?.map((i) => (
             <img key={i} src={i} width="150" height="150" />
           ))} */}
-      
-      </PageWrapper>
-    );
-  };
+        </div>
+        <div className="product-info">
+          <h3 >{product?.name}</h3>
+          <h4>Price: {product?.price} E</h4>
+          <div className="product-details">
+            Details:
+            <div>{product?.description}</div>
+          </div>
+          <p>Quantity:</p>
+          <div className="order-quantity">
+           
+            <div className="product-quantity-container">
+              <div >
+                <div className="quantity">
+                  <input
+                    onClick={handleIncrement}
+                    type="button" value="+" className="plus" />
+                  <input
+                    // onChange={handleQuantityChange}
+                    type="number" step="1" max="10" min="1" value={orderQuantity} title="Qty"
+                    className="qty"
+                    size="4" />
+                  <input
+                    onClick={handleDecrement}
+                    type="button" value="-" className="minus" />
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={onAddHandler}
+              type="button" className="btn-pink">
+              Add to Cart
+              {/* <i className="fa fa-trash"  /> */}
+            </button>
+          </div>
+        </div>
+      </div>
+    </PageWrapper>
+  );
+};
 
-  export default ProductPage;
+export default ProductPage;

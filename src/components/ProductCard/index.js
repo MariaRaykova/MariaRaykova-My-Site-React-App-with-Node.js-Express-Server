@@ -37,7 +37,7 @@ const ProductCard = (product) => {
                 </div>
               </div>
               <div className="product-add ">
-              <Link className="btn-pink" to={`/product/${p._id}`}>
+              <Link className="btn-pink" to={`/product/${_id}`}>
                  View Details
            </Link>
                 {/* <button

@@ -44,7 +44,7 @@ const Shop = (props) => {
           <article className="layout-flex">
             {/* за да заредим всички items */}
             {products?.map((p) => (
-              <ProductCard key={p._id} {...p} />
+              <ProductCard key={p?._id} {...p} />
             ))}
           </article>
         </div>

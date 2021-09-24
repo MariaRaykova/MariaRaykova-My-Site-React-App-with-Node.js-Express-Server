@@ -40,33 +40,18 @@ export default function SwiperCollection() {
     if (products?.length > 0) {
       return (
         <div className="new-collection">
+          <div className="header-section">
           <h2>New Collection</h2>
-          {/* <Swiper
-        pagination={{
-          "dynamicBullets": true
-        }}
-        effect="coverflow"
-        coverflowEffect={{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true
-        }}
-        slidesPerView={2}
-        centeredSlides
-        loop
-        style={{ height: "400px", width: "1200px" }}
-        //на целия контейнер
-      > */}
+          </div>
           <Swiper
             slidesPerView={5}
             spaceBetween={30}
             freeMode={true}
-            pagination={{
-              "clickable": true
-            }}
-            style={{ 'width': '1000px', 'height': '420px' }} 
+            // pagination={{
+            //   "clickable": true
+            // }}
+            loop
+            style={{ 'width': '1200px', 'height': '420px' }} 
             className="mySwiper">
             {products.filter(product => {
               if(product.new){
