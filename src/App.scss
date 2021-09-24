@@ -1,7 +1,41 @@
+@mixin bp($point) {
+    @if $point==desktop-large {
+        @media (min-width: 1600px) {
+            @content;
+        }
+    }
+    @else if $point==desktop {
+        @media (min-width: 1250px) {
+            @content;
+        }
+    }
+    @else if $point==laptop {
+        @media (min-width: 1024px) {
+            @content;
+        }
+    }
+    @else if $point==mobile {
+        @media (max-width: 1023px) {
+            @content;
+        }
+    }
+    @else if $point==phone {
+        @media (max-width: 650px) {
+            @content;
+        }
+    }
+}
+
 .page-container {
 	max-width: var(--layout-main-width);
 	margin: 0 auto;
-	padding: 2em;
+	// 
+}
+.my-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	
 }
  aside {
     flex: 1 1 15%;
@@ -210,4 +244,13 @@ margin:10px;
 	background-color: white;
 	box-shadow:0 6px 6px rgba(10,16,20,.15), 0 0 52px rgba(10,16,20,.12);border:0;
 	color: ar(--color-pink-default, lightgrey);
+}
+
+.reserved{
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	font-family:  Roboto;
+	font-size: 12px;
+
 }

@@ -1,22 +1,42 @@
 .new-collection  {
     .mySwiper .swiper-slide {
-        width: 25%;
+        // width: 25%;
         height: 100%;
         opacity: 1;
     } 
+    .product-inner:hover{
+        padding:2px;
+        border-color: var(--color-pink-default);
+    }
+    .header-section{
+        position: relative;
+        h2 {
+            text-transform: uppercase;
+        }
+        h2:after {
+            content: '';
+            height: 2px;
+            width: 50px;
+            background: var(--color-pink-default, lightgray);
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            margin-left: -25px;
+        }
+    }
     .product-inner{
         height: 100%;
     }
      .product-image {
-         height: 60%;
+         height: 70%;
      }
      .product-info {
-        height: 40%;
+        height: 30%;
         .product-name {
-            height: 60%;
+            height: 50%;
         }
         .product-bar{
-            height: 40%;
+            height: 50%;
         }
     }
 

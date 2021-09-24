@@ -19,7 +19,6 @@ export default function ImageThumbnailViewer({ images }) {
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
                 className="mySwiper2"
-
             >
                 {images?.map((i) => (
                     <SwiperSlide key={i}>
@@ -38,8 +37,10 @@ export default function ImageThumbnailViewer({ images }) {
                 className="mySwiper"
                 style={{ 'width': '500px' }} //на цялата лента с малки картинки
             >
+                 {/* direction="vertical"
+                 slideToClickedSlide={true} */}
                 {images?.map((i) => (
-                    <SwiperSlide key={i}>
+                    <SwiperSlide  key={i}>
                         <img src={i} />
                     </SwiperSlide>
                 ))}

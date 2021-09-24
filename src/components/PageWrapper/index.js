@@ -13,6 +13,7 @@ function PageWrapper({
       <Header />
         <main >{children}</main>
       <Footer />
+      <p className="reserved">All rights reserved &copy; MariaRaykova</p>
     </div>
   );
 }
