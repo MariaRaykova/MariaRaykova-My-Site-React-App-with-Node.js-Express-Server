@@ -1,9 +1,37 @@
+@mixin bp($point) {
+    @if $point==desktop-large {
+        @media (min-width: 1200px) {
+            @content;
+        }
+    }
+    @else if $point==desktop {
+        @media (min-width: 992px) {
+            @content;
+        }
+    }
+    @else if $point==tablet {
+        @media (min-width: 768px) {
+            @content;
+        }
+    }
+    @else if $point==mobile {
+        @media (max-width: 767.9px) {
+            @content;
+        }
+    }
+    @else if $point==phone {
+        @media (max-width: 650px) {
+            @content;
+        }
+    }
+}
+ 
 .site-footer {
     // border-top: 1px solid;
     background-color:  var(--color-pink-default);
     color: var(--color-blue-default);
     nav {
-        padding: 10px;
+       
     }
    .footer-container{
     display: flex;
@@ -29,7 +57,7 @@
         align-items: flex-start;
         }
 }
-.contacts{
+.contacts-footer{
     width: 30%;
 }
 .subscribe{
@@ -115,15 +143,19 @@
             }
         }
     }
-footer nav {
-    flex: 1;
+footer ul {
+ 
     display: flex;
-    flex-flow: column wrap;
     justify-content: center;
     flex: 0 1 100%;
     min-height: 100%;
     background:white;
+   li{
+       padding: 0.5em 1.5em;
+   }
+ 
 }
+
 footer li .fa{
     font-size: 24px;
 }

@@ -12,7 +12,7 @@ module.exports = {
   },
   getByUser: (req, res, next) => {
     models.Order.find({ userId: req.params.userId })
-      .populate("product")
+    .populate("product")
       .then((orders) => {
         return res.send(orders);
       })

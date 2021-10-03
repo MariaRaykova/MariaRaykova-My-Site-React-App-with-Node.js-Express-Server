@@ -12,9 +12,6 @@ export const logInHandler = (body) => {
       window.localStorage.setItem("token", res.headers.get("Authorization"));
       return res.json();
     })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 export const registerHandler = (body) => {

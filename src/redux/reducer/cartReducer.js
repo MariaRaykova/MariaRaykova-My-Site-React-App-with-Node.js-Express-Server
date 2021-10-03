@@ -6,14 +6,18 @@ import {
   REMOVE_PRODUCT_FROM_CART,
   DECREMENT_CART_ITEM_QUANTITY,
   INCREMENT_CART_ITEM_QUANTITY,
-  EMPTY_CART
+  EMPTY_CART, 
+  SHOW_CART,
+  FINISH_ORDER 
 } from '../action/cartActions';
 
 
 const initialState = {
   cartProducts: [{
     product: {},
-    count: 0
+    count: 0, 
+    showCartDropdown: false,
+    finishOrder: false
   }],
   totalProducts: 0
 };
@@ -23,7 +27,8 @@ export const cartReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case GET_CART_PRODUCTS:
-      if(action.payload.length<=0){
+  
+      if(!action.payload.products){
         return {
           ...state,
           cartProducts: []
@@ -31,7 +36,8 @@ export const cartReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        cartProducts: action.payload,
+        cartProducts: action.payload.products,
+        totalProducts: action.payload.totalProducts
       };
     case ADD_PRODUCT_TO_CART:
       newCart = [...state.cartProducts];
@@ -52,7 +58,8 @@ export const cartReducer = (state = initialState, action) => {
     case REMOVE_PRODUCT_FROM_CART:
       return {
         ...state,
-        cartProducts: state.cartProducts.filter((i) => (i.product._id !== action.payload))
+        totalProducts: state.totalProducts - state.cartProducts.find((i) => (i.product._id === action.payload)).count,
+        cartProducts: state.cartProducts.filter((i) => (i.product._id !== action.payload)),
       };
     case INCREMENT_CART_ITEM_QUANTITY:
       return {
@@ -83,6 +90,16 @@ export const cartReducer = (state = initialState, action) => {
         cartProducts: action.payload,
         totalProducts: 0
       };
+      case SHOW_CART:
+        return {
+          ...state,
+          showCartDropdown: action.payload
+        };
+        case FINISH_ORDER:
+          return {
+            ...state,
+            finishOrder: action.payload
+          };
     default:
       return state;
   }

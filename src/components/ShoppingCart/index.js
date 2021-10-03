@@ -5,32 +5,45 @@ import CartContext from "../../contexts/CartContext";
 import { clearCartStorage } from "../../utils/cartServices";
 import { createOrder } from "../../utils/ordersServices";
 import PageWrapper from "../PageWrapper";
-import { emptyCart, loadCart } from "../../redux/action/cartActions";
+import { emptyCart, loadCart, finishOrder } from "../../redux/action/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../CartItem";
+import Checkout from "../Checkout/stripe-checkout"
+
+// import { STRIPE_PUBLISHABLE } from '../../config';
+
 
 const Cart = () => {
+  // const promise = loadStripe(STRIPE_PUBLISHABLE)
   const history = useHistory();
   const authContext = useContext(AuthContext);
   const [next, setNext] = useState(false);
   const [success, setSuccess] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
+
   const userId = authContext.user?._id ? authContext.user?._id : "";
   const cartProducts = useSelector((state) => state.cartReducer.cartProducts);
-  const dispatch = useDispatch();
-
+const  isFinished = useSelector((state) => state.cartReducer.finishOrder);
+const dispatch = useDispatch();
+// const ELEMENTS_OPTIONS = {
+//   fonts: [
+//     {
+//       cssSrc: "https://fonts.googleapis.com/css?family=Roboto"
+//     }
+//   ]
+// };
   useEffect(() => {
     dispatch(loadCart());
        if (userId !== "") {
       setUserName(authContext.user.name);
       setUserEmail(authContext.user.email);
     }
-  }, []);
-
-  const orderDetailsHandler = () => {
+    
     setNext(true);
-  };
+  }, [isFinished]);
+
+
   const getTotal = () => {
     return cartProducts.reduce((total, currItem) => {
       return total + currItem.count * currItem.product.price;
@@ -39,23 +52,27 @@ const Cart = () => {
   const onOrderSubmitHandler = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
-    const name = e.target.name.value;
+    const userName = e.target.name.value;
     const phone = e.target.phone.value;
     const city = e.target.city.value;
     const address = e.target.address.value;
     const totalAmount = getTotal()
+   console.log(e.target.city.value)
+   console.log(e.target.address.value)
    
-    createOrder({ email, name, phone, city, address, userId, cartProducts, totalAmount }).then(
+    createOrder({ email, name: userName, phone, city, address, userId, cartProducts, totalAmount }).then(
       (res) => {
-       
         dispatch(emptyCart())
         setNext(false);
         setSuccess(true);
+        dispatch(finishOrder(false));
       }
     );
   };
+
+
   const showSuccess = () => (
-    <div className="alert alert-info">Thanks for your order!</div>
+    <div className="alert alert-info"></div>
   );
 
   const showItems = () => {
@@ -71,6 +88,9 @@ const Cart = () => {
       </div>
     );
   };
+const onDelete =()=>{
+  setNext(false);
+}
 
   const noItemsMessage = () => (
     <h3>
@@ -81,9 +101,9 @@ const Cart = () => {
     if (next) {
       return (
         <section className="order">
-          <form onSubmit={onOrderSubmitHandler}>
+     <form onSubmit={onOrderSubmitHandler}>
             <fieldset>
-              <legend>Address Details</legend>
+              <legend>Shipping Details</legend>
               <p className="field">
                 <label htmlFor="email">Email</label>
                 <span className="input">
@@ -105,7 +125,7 @@ const Cart = () => {
                     name="name"
                     id="name"
                     placeholder="Name"
-                    value={userEmail}
+                    value={userName}
                   />
                   <span className="actions"></span>
                 </span>
@@ -143,23 +163,21 @@ const Cart = () => {
                 </span>
               </p>
               {/* {getTotal()} */}
-              <button className="btn btn-pink" type="submit">
-                Order
-              </button>
             </fieldset>
+            {isFinished ? (<button className="btn-pink" type="submit" > Payment Successful! Finish your order</button>) : null }
           </form>
         </section>
-      );
+      )
     }
   };
 
   return (
     <PageWrapper
       title="Shopping Cart" >
-      {success ? (
-        showSuccess()
-      ) : (
-        <div>
+      {success 
+      ? (showSuccess() ) 
+      : ( 
+      <div>
         <div >
           {cartProducts?.length > 0 ? (
             <div>
@@ -170,14 +188,15 @@ const Cart = () => {
                       </div>
               </div>
               <h3 className="card-header">Finish your order</h3>
-              <button className="btn-pink" onClick={orderDetailsHandler}>Continue</button>
-              <button className="btn-pink" onClick={()=>dispatch(emptyCart())}>Clear Cart</button>
+              {showOrderDetails()}
+              {/* <button className="btn-pink" onClick={orderDetailsHandler}>Continue</button> */}
+              {/* <button className="btn-pink" onClick={()=>{dispatch(emptyCart())}}>Clear Cart</button> */}
             </div>
           ) : (
             <div className="col-6">{noItemsMessage()}</div>
           )}
+            <Checkout name={userName} email={userEmail} />
         </div>
-              {showOrderDetails()}
         </div>
       )}
     </PageWrapper>

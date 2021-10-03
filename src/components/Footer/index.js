@@ -57,8 +57,7 @@ const Footer = () => {
             </div>
           */}
           
-        
-            <nav>
+    
                 <ul>
                     <li><i className="fa fa-facebook"></i></li>
                     <li><i className="fa fa-twitter"></i></li>
@@ -67,8 +66,7 @@ const Footer = () => {
 
                 </ul>
                 
-            </nav>
-            
+ 
       
         </footer>
         
