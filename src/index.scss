@@ -7,12 +7,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Ruthie&display=swap');
 
 :root {
-    --font-size-body: 12px;
-    --font-size-body-larger: 14px;
-    --font-size-body-big: 16px;
-    --font-size-body-huge: 18px;
+    --font-size-body: 14px;
+    --font-size-body-larger: 16px;
+    --font-size-body-big: 18px;
+    --font-size-body-huge: 20px;
     --layout-main-width: 1200px;
-    --color-pink-default: #efd6d6;
+    --color-pink-default: #ebd8d2; //#efd6d6;
     --color-blue-default: #1B3D52;
     --spacing-layout-elements: 2em;
 
@@ -22,6 +22,7 @@
     src: url('./font/Blackstand.ttf');
 }
 body {
+    font-size: var(--font-size-body);
     margin     : 0;
     font-family:'Cinzel', serif;
 }

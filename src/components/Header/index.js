@@ -1,20 +1,40 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./index.scss";
-
 import { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import CartContext from "../../contexts/CartContext";
 import { useDispatch, useSelector } from "react-redux";
+import CartIcon from "../Cart/CartIcon"
+import CartDropdown from "../Cart/CartDropdown"
+import {showCart, loadCart} from  "../../redux/action/cartActions"
+
 const Header = () => {
   const context = useContext(AuthContext);
-  const [quantity, setQuantity] = useState(0);
-  const cartProducts = useSelector((state) => state.cartReducer.cartProducts);
   const totalProducts = useSelector((state) => state.cartReducer.totalProducts);
- 
+  const isShownCart = useSelector((state) => state.cartReducer.showCartDropdown);
+  const cartProducts = useSelector((state) => state.cartReducer.cartProducts);
+  const dispatch = useDispatch();
   useEffect(() => {
-    setQuantity(cartProducts?.length)
-  }, [cartProducts]);
+    dispatch(loadCart());
+
+  }, []);
+
+
+const showCartDropdown =()=>{
+  if(isShownCart){
+    return (
+      <CartDropdown cartProducts={cartProducts} />
+    )
+  }
+}
+const toggleCartDropdown = () =>{
+  if(isShownCart){
+    dispatch(showCart(false))
+  }else {
+    dispatch(showCart(true))
+  }
+}
   const profilePage = () => {
     if (context.isLogged && context.user.role === "admin") {
       return (
@@ -40,13 +60,19 @@ const Header = () => {
   };
   return (
     <header className="site-header">
-  
         <div id="menuToggle">
           <input type="checkbox" />
           <span></span>
           <span></span>
           <span></span>
           <ul id="menu">
+            <p className="sidebar-header">New Desire Boutique</p>
+            {context.isLogged ? (
+            <ul>
+              <li>Welcome,{context.user?.name}!</li>
+              {profilePage()}
+            </ul>
+          ) : null }
             <li>
               <NavLink activeClassName="nav-link-selected" to="/">
                 Home
@@ -58,8 +84,8 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink activeClassName="nav-link-selected" to="/contact">
-                Contact
+              <NavLink activeClassName="nav-link-selected" to="/contacts">
+                Contact Us
               </NavLink>
             </li>
             <li>
@@ -70,8 +96,10 @@ const Header = () => {
           </ul>
         </div>
         <section className="logo">
+          <NavLink to="/">
           <div className="logo-nd">New Desire</div>
           <div className="logo-boutique">Boutique</div>
+          </NavLink>
         </section>
         <nav>
           <ul>
@@ -86,26 +114,39 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink activeClassName="nav-link-selected" to="/contact">
-                Contact
+              <NavLink activeClassName="nav-link-selected" to="/contacts">
+                Contact Us
               </NavLink>
             </li>
           </ul>
         </nav>
-
         <div className="header-buttons">
           <NavLink to="/">
             <i className="fa fa-search"></i>
           </NavLink>
-          <NavLink to="/cart">
-            <i className="fa fa-shopping-cart">
+          {/* <NavLink to="/cart"> */}
+            {/* <CartIcon itemCount={totalProducts} /> */}
+           {showCartDropdown()}
+            <i className="fa fa-shopping-cart" onClick={toggleCartDropdown}>
               <sub>
                 {/* <small>{cartProducts.count ? cartProducts.count : 0}</small> */}
                 <small>{totalProducts}</small>
               </sub>
             </i>
-          </NavLink>
+        {context.isLogged ? (
+                <NavLink to="/logout" className="show-icon">
+                  <i className="fa fa-sign-out" aria-hidden="true"></i>
+                </NavLink>
+          
+          ) : (
+                <NavLink to="/login" className="show-icon">
+                 <i class="fa fa-user" aria-hidden="true"></i>
+                </NavLink>
+          )}
+    
+      
         </div>
+      
         <div className="second-bar">
           {context.isLogged ? (
             <ul>

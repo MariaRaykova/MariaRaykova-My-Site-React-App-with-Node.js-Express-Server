@@ -15,16 +15,25 @@ const UserProfilePage = () => {
   return (
     <PageWrapper>
       <div className="row">
-        <div className="col-md-8 offset-md-2">
+      <div className="card">
+          <h3>User Info</h3>
+          <ul>
+                      <li> Name: {context.user.name}</li>
+                      <li> Email: {context.user.email} </li>
+                
+                    </ul>
+        </div>
+        <div className="card">
+          <h3>Orders: </h3>
           {orders?.map((o) => {
             return (
               <div
                 className="mt-5"
-                style={{ borderBottom: "5px solid indigo" }}
+                style={{ borderBottom: "2px solid var(--color-blue-default)" }}
               >
-                <h2 className="mb-5">
+                <h4 className="mb-5">
                   <span className="bg-primary">Order ID: {o?._id}</span>
-                </h2>
+                </h4>
 
                 <ul className="list-group mb-2">
                   <li className="list-group-item">Ordered by: {o?.name}</li>
@@ -33,9 +42,9 @@ const UserProfilePage = () => {
                     Delivery address: {o?.address}
                   </li>
                 </ul>
-                <h3 className="mt-4 mb-4 font-italic">
+                <p className="mt-4 mb-4 font-italic">
                   Total products in the order: {o?.items?.length}
-                </h3>
+                </p>
 
                 {o?.items?.map((i) => (
                   <div className="mb-4" key={i._id}>
@@ -51,6 +60,7 @@ const UserProfilePage = () => {
             );
           })}
         </div>
+      
       </div>
     </PageWrapper>
   );

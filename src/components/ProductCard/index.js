@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import AuthContext from "../../contexts/AuthContext";
 import CartContext from "../../contexts/CartContext";
 import AdminBar from "../Admin/AdminBar"
-import { addToCartAction } from "../../redux/action/cartActions"
+import { addToCartAction, showCart } from "../../redux/action/cartActions"
 
 
 import "./index.scss";
@@ -15,6 +15,7 @@ const ProductCard = (product) => {
   const dispatch = useDispatch();
   const onAddHandler = () => {
     dispatch(addToCartAction(product))
+    dispatch(showCart(true))
   };
 
   return (
@@ -31,23 +32,24 @@ const ProductCard = (product) => {
           <div className="product-description">{description}</div>
           <div className="product-bar">
             <div className="product-options">
-              <div className="product-price">
+            
                 <div className="product-price-inner">
                   <span className="price">Price: {price}€</span>
                 </div>
-              </div>
-              <div className="product-add ">
-              <Link className="btn-pink" to={`/product/${_id}`}>
-                 View Details
-           </Link>
-                {/* <button
+                <button
                 onClick={onAddHandler}
                 className="btn-pink"
                 >
-                 Buy Now
-                </button> */}
+                 Add To Cart
+                </button>
               </div>
-            </div>
+            
+              {/* <Link className="submit" to={`/product/${_id}`}>
+                 View Details
+           </Link> */}
+               
+              
+         
           </div>
         </div>
       </div>

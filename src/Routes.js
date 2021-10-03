@@ -14,6 +14,7 @@ import EditProduct from "./components/Admin/EditProduct";
 import AddImage from "./components/Admin/AddImage";
 import ManageCoverflow from "./components/Admin/ManageCoverflow";
 import Shop from "./components/ShopPage";
+import ContactPage from "./components/ContactPage";
 
 const Routes = () => {
   const context = useContext(AuthContext);
@@ -25,6 +26,7 @@ const Routes = () => {
         <Route path="/product/category/:category" exact component={Shop} />
         <Route path="/product/:id" exact component={ProductPage} />
         <Route path="/cart" exact component={ShoppingCart} />
+        <Route path="/contacts" exact component={ContactPage} />
         {/* <Route path="/orders" exact component={Orders} /> */}
         <Route path="/user/profile/:id">
           {context.isLogged && context.user.role === "user" ? (

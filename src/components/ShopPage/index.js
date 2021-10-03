@@ -8,27 +8,37 @@ import { getAllCategories, getAllProducts, getAllProductsByCategory } from "../.
 
 const Shop = (props) => {
   const context = useContext(AuthContext);
-  const products = useSelector((state) => state.productsReducer.products);
+  const [products, setProducts] = useState()
+  const productsList = useSelector((state) => state.productsReducer.products);
   const categories = useSelector((state) => state.productsReducer.categories);
   const loading = useSelector((state) => state.productsReducer.loading);
-
-  const dispatch = useDispatch();
-  
+  const [success, setSuccess] = useState(false);
+  const dispatch = useDispatch(); 
+  console.log(JSON.stringify(products))
   useEffect(() => {
     dispatch(getAllCategories());
-    
     if (props.match.params.category) {
-      dispatch(
-        getAllProductsByCategory(props.match.params.category)
-      );
+      dispatch(getAllProductsByCategory(props.match.params.category));
     } else {
       dispatch(getAllProducts());
     }
-  
+    if(productsList){
+      setProducts(productsList)
+    }
   }, []);
-  
+ 
+  console.log()
+  const showLoading = () => {
+    if (loading) {
+      return (
+        <div className="alert alert-success">
+          <h2>Loading...</h2>
+        </div>
+      );
+    }
+  };
   const categoryFilter = () => {
-    if(categories){
+    if (categories) {
       return categories.map((c) => (
         <Link to={`/product/category/${c.name}`} key={c._id}>
           {c.name}
@@ -36,10 +46,14 @@ const Shop = (props) => {
       ))
     }
   }
-  
+
   return (
     <PageWrapper>
-          {categoryFilter()}
+       {loading ? showLoading() : (
+         <div>
+        <div className="category-filter">
+      {categoryFilter()}
+      </div>
         <div className="card-container">
           <article className="layout-flex">
             {/* за да заредим всички items */}
@@ -48,6 +62,10 @@ const Shop = (props) => {
             ))}
           </article>
         </div>
+        </div>
+      )}
+
+
     </PageWrapper>
   );
 };
